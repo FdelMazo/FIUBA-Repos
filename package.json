@@ -10,7 +10,6 @@
     "framer-motion": "^4.1.17",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-gh-repo-cards": "^2.0.0",
     "react-scripts": "^3.4.3"
   },
   "homepage": "https://fede.dm/FIUBA-Repos",

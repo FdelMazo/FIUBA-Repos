@@ -1,7 +1,6 @@
 import React from "react";
 import { DataContext } from "../Contexts";
-import RepoCards from "react-gh-repo-cards";
-import "react-gh-repo-cards/dist/index.css";
+import RepoCards from "./react-gh-repo-cards";
 
 const Repos = () => {
   const { repos } = React.useContext(DataContext);
