@@ -11,7 +11,7 @@ export default ({
   return (
     <div className={styles["row"]}>
       {repoDetails.map((detail) => {
-        const { user, repoName, showFullTitle, repoData } = detail;
+        const { user, repoName, showFullTitle = true, repoData } = detail;
 
         return (
           <div

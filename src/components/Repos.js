@@ -12,12 +12,7 @@ const Repos = () => {
   return (
     <>
       {repos.length > 0 && (
-        <RepoCards
-          repoDetails={repos.map(r => ({
-            ...r,
-            showFullTitle: true,
-          }))}
-        />
+        <RepoCards repoDetails={repos} />
       )}
 
 
