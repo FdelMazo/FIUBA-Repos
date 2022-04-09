@@ -7,13 +7,11 @@ import { ReactComponent as ForkIcon } from "./github-utils/fork.svg";
 
 export default ({
   repoDetails,
-  Loading = DefaultLoading,
-  Error = DefaultError,
 }) => {
   return (
     <div className={styles["row"]}>
       {repoDetails.map((detail) => {
-        const { user, repoName, showFullTitle } = detail;
+        const { user, repoName, showFullTitle, repoData } = detail;
 
         return (
           <div
@@ -27,11 +25,11 @@ export default ({
             ].join(" ")}
           >
             <RepoCard
+              key={user + repoName}
               user={user}
               repo={repoName}
               showFullTitle={showFullTitle}
-              Loading={Loading}
-              Error={Error}
+              data={repoData}
             />
           </div>
         );
@@ -40,45 +38,9 @@ export default ({
   );
 };
 
-const DefaultLoading = () => {
+const RepoCard = ({ user, repo, showFullTitle, data }) => {
+
   return (
-    <div className={[styles["main-content"], styles["loading"]].join(" ")}>
-      <h2>Loading...</h2>
-    </div>
-  );
-};
-
-const DefaultError = () => {
-  return (
-    <div className={[styles["main-content"], styles["error"]].join(" ")}>
-      <h2>Error Occured!</h2>
-    </div>
-  );
-};
-
-const RepoCard = ({ user, repo, showFullTitle, Loading, Error }) => {
-  const [loading, setLoading] = React.useState(true);
-  const [data, setData] = React.useState("");
-  const [error, setError] = React.useState("");
-
-  React.useEffect(() => {
-    fetch(`https://api.github.com/repos/${user}/${repo}`)
-      .then((res) => res.json())
-      .then((res) => {
-        setData(res);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
-      });
-  }, []);
-
-  return loading ? (
-    <Loading />
-  ) : error ? (
-    <Error />
-  ) : (
     <div className={styles["main-content"]}>
       <div>
         <RepoIcon className={[styles["svg"], styles["mr-2"]].join(" ")} />

@@ -32,7 +32,7 @@ const useData = () => {
         }
       });
       const json = await res.json();
-      setRepos(json.items.map(r => ({ user: r.owner.login, repoName: r.name })));
+      setRepos(json.items.map(r => ({ user: r.owner.login, repoName: r.name, repoData: r })));
 
       const codigosMaterias = [...new Set(json.items.flatMap(r =>
         r.topics.filter(t => t.match(/^\d\d\d\d$/))
