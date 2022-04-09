@@ -1,24 +1,38 @@
-import {
-  Text
-} from "@chakra-ui/react";
 import React from "react";
+import {
+  Box,
+  Heading,
+  Text,
+  Code,
+  Link,
+} from '@chakra-ui/react';
 
 const Header = () => {
   return (
-    <Text>
-      Im a header
-      {/* 
-      - maybe darle el look and feel del fiuba map?
-      - linkear al topic #fiuba
-      - explicar como agregar tu propio repo aca
-      - poner como agregar gists aca
-      - poner cosito de sugerencias
-      - pedir que la gente lo comparta?
-      - pedir que la gente ponga parciales/finales?
-      - 'es como una wiki pero...'
-      - 'bonus points si en la descripcion o readme decis en que cuatri la cursaste, asi tus compas lo saben' */}
-    </Text>
+    <Box py={16} w="40%">
+      <Heading
+        fontWeight={600}
+        fontSize={'6xl'}
+      >
+        FIUBA-Repos
+      </Heading>
+      <Text color={'gray.600'}>
+        Es sencillo: si tenés TPs, parciales, finales, lo que sea de una materia subido a Github, andá al repo y agregale el topic <Link isExternal href='https://github.com/topics/fiuba'><Code colorScheme="purple">fiuba</Code></Link> y el código de la materia (ej: <Code colorScheme="purple">7541</Code>).
+      </Text>
+
+      <Text color={'gray.600'}>
+        De a poquito vamos armando esta pseudo wiki donde todos podamos compartir nuestro conocimiento.
+      </Text>
+
+      <Text color={'gray.600'}>
+        Bonus points si en la descripción escribís que cuatrimestre la cursaste y que contiene el repo!
+      </Text>
+
+      <Text color={'gray.600'} fontSize="sm">
+        Si tenés alguna sugerencia, mandame un mail! <Code colorScheme="blue" fontSize="xs">fdelmazo at fi.uba.ar</Code>
+      </Text>
+    </Box >
   );
-};
+}
 
 export default Header;

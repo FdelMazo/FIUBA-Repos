@@ -6,7 +6,7 @@ import Materias from "./Materias";
 
 const MainApp = () => {
   return (
-    <Flex direction="column" h="100vh">
+    <Flex direction="column" h="100vh" marginX={24}>
       <Header />
       <Repos />
       <Materias />
