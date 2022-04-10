@@ -46,7 +46,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
               }}
             >
               <Flex justifyContent="space-between">
-                <Text color="purple">
+                <Text color="purple" fontWeight={600}>
                   {m.codigo}
                 </Text>
                 <Flex alignItems="center">

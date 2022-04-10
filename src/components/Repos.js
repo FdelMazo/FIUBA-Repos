@@ -1,4 +1,4 @@
-import { Box, Heading, Code } from "@chakra-ui/react";
+import { Box, Heading, Code, Center } from "@chakra-ui/react";
 import React from "react";
 import { DataContext } from "../Contexts";
 import Loading from "./Loading";
@@ -33,7 +33,7 @@ const Repos = ({ materiaSelected }) => {
         h="80%"
         bg="purple.50"
       >
-        {repos.length ? <RepoCards repoDetails={shownRepos} /> : <Loading />}
+        {repos.length ? <Center><RepoCards repoDetails={shownRepos} /></Center> : <Loading />}
       </Box>
     </Box>
   );

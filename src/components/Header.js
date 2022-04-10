@@ -14,7 +14,7 @@ import { DataContext } from "../Contexts";
 const Header = () => {
   const { repos } = React.useContext(DataContext);
   return (
-    <Box mt={16}>
+    <Box mt={10}>
       <Heading
         fontWeight={600}
         fontSize={'6xl'}
