@@ -5,11 +5,15 @@ import Repos from "./Repos";
 import Materias from "./Materias";
 
 const MainApp = () => {
+  const [materiaSelected, setMateriaSelected] = React.useState(null);
+
   return (
-    <Flex direction="column" h="100vh" marginX={24}>
-      <Header />
-      <Repos />
-      <Materias />
+    <Flex direction="row" h="100vh" marginX={18}>
+      <Flex direction="column" w="100%">
+        <Header />
+        <Materias materiaSelected={materiaSelected} setMateriaSelected={setMateriaSelected} />
+      </Flex>
+      <Repos materiaSelected={materiaSelected} setMateriaSelected={setMateriaSelected} />
     </Flex>
   );
 };

@@ -1,20 +1,61 @@
 import {
-  Text
+  Box,
+  Text,
+  Flex,
+  Heading,
+  Icon,
+  SimpleGrid
 } from "@chakra-ui/react";
 import React from "react";
 import { DataContext } from "../Contexts";
+import { ReactComponent as RepoIcon } from "./react-gh-repo-cards/github-utils/repo.svg";
 
-const Materias = () => {
+const Materias = ({ materiaSelected, setMateriaSelected }) => {
   const { materias } = React.useContext(DataContext);
 
-
   return (
-    <Text>
-      Lista de materias: {JSON.stringify(materias)}
-      {/* Cards por cada materia, ordenadas de alguna manera copada. clickeas una materia, y llena la parte de arriba!
-      tambien poner una card para las #fiuba sueltos
-      cada materia con un toggle de show/no show? */}
-    </Text>
+    <SimpleGrid
+      m={8}
+      columns={2}
+      w="75%"
+      spacing={4}
+      overscrollBehaviorY="contain"
+      overflowY='auto'
+      border="1px dashed purple"
+      borderRadius={8}
+    >
+      {materias.sort((a, b) => b.count - a.count).map(m => (
+        <Box
+          m={4}
+          borderRadius={6}
+          p={8}
+          boxShadow={materiaSelected === m.codigo ? "0 0 0 2px violet" : "lg"}
+          key={m.codigo}
+          onClick={() => {
+            if (materiaSelected === m.codigo) {
+              setMateriaSelected(null);
+            } else {
+              setMateriaSelected(m.codigo);
+            }
+          }}
+        >
+          <Flex justifyContent="space-between">
+            <Text color="purple">
+              {m.codigo}
+            </Text>
+            <Flex alignItems="center">
+              <Text fontWeight={600}>
+                {m.count}
+              </Text>
+              <Icon as={RepoIcon} w={5} h={5} />
+            </Flex>
+          </Flex>
+          <Heading fontSize="lg" fontWeight={600}>
+            {m.nombre}
+          </Heading>
+        </Box>
+      ))}
+    </SimpleGrid>
   );
 };
 

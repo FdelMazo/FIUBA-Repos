@@ -11,8 +11,7 @@ const useData = () => {
       const getTotalCount = await fetch(
         `https://api.github.com/search/repositories?` + new URLSearchParams({
           q: "topic:fiuba",
-          sort: "star",
-          order: "desc",
+          per_page: 1,
         }), {
         headers: {
           Accept: "application/vnd.github.v3+json"
@@ -23,7 +22,7 @@ const useData = () => {
       const res = await fetch(
         `https://api.github.com/search/repositories?` + new URLSearchParams({
           q: "topic:fiuba",
-          sort: "star",
+          sort: "updated",
           order: "desc",
           per_page: totalCount,
         }), {
@@ -32,6 +31,8 @@ const useData = () => {
         }
       });
       const json = await res.json();
+      if (!json.items) return;
+
       setRepos(json.items.map(r => ({ user: r.owner.login, repoName: r.name, repoData: r })));
 
       const codigosMaterias = [...new Set(json.items.flatMap(r =>
@@ -39,7 +40,8 @@ const useData = () => {
       ))]
       setMaterias(codigosMaterias.filter(c => MATERIAS[c]).map(c => ({
         codigo: c,
-        nombre: MATERIAS[c]
+        nombre: MATERIAS[c],
+        count: json.items.filter(r => r.topics.includes(c)).length
       })))
     };
 

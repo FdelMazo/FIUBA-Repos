@@ -9,7 +9,7 @@ import {
 
 const Header = () => {
   return (
-    <Box py={16} w="40%">
+    <Box mt={16} w="60%">
       <Heading
         fontWeight={600}
         fontSize={'6xl'}

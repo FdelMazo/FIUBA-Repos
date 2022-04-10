@@ -1,22 +1,41 @@
+import { Box, Heading, Code } from "@chakra-ui/react";
 import React from "react";
 import { DataContext } from "../Contexts";
 import RepoCards from "./react-gh-repo-cards";
 
-const Repos = () => {
+const Repos = ({ materiaSelected }) => {
   const { repos } = React.useContext(DataContext);
-  // Inicialmente 8 repos de #fiuba al azar
-  // un estilo de carusel que pone unos 8~10 repos
-  // ver como implementar el lazy load... que va a ser lo mas jodido
-  // aprovechar que tiene parametro Loading el coso este
+  const [shownRepos, setShownRepos] = React.useState(repos);
+
+  React.useEffect(() => {
+    if (materiaSelected) {
+      setShownRepos(repos.filter(r => r.repoData.topics.includes(materiaSelected)));
+    } else {
+      setShownRepos(repos);
+    }
+  }, [materiaSelected, repos]);
 
   return (
-    <>
-      {repos.length > 0 && (
-        <RepoCards repoDetails={repos} />
+    <Box mt={28} w="70%">
+      <Heading fontWeight={600} fontSize='4xl'>
+        Repositorios con topics{" "}
+        <Code colorScheme="purple" fontSize="2xl">fiuba</Code>
+        {" "}
+        <Code colorScheme="purple" fontSize="2xl">{materiaSelected}</Code>
+      </Heading>
+      <Box
+        p={8}
+        overscrollBehaviorY="contain"
+        overflowY='auto'
+        border="1px dashed purple"
+        borderRadius={8}
+        h="80%"
+      >
+        {shownRepos.length > 0 && (
+          <RepoCards repoDetails={shownRepos} />
       )}
-
-
-    </>
+      </Box>
+    </Box>
   );
 };
 
