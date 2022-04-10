@@ -7,9 +7,12 @@ import {
   Link,
   ListItem,
   List,
+  Tooltip,
 } from '@chakra-ui/react';
+import { DataContext } from "../Contexts";
 
 const Header = () => {
+  const { repos } = React.useContext(DataContext);
   return (
     <Box mt={16}>
       <Heading
@@ -37,7 +40,7 @@ const Header = () => {
       </Text>
 
       <Text color={'gray.600'}>
-        Agregar tu repo es sencillo: si tenés TPs, parciales o finales de una materia subido a Github, solo hay que agregale el topic <Link isExternal href='https://github.com/topics/fiuba'><Code colorScheme="purple">fiuba</Code></Link> y el código de la materia (ej: <Code colorScheme="purple">7541</Code>). Los topics se editan desde la página principal del repo, a la derecha (donde se cambia la descripción).
+        Agregar tu repo es sencillo: si tenés TPs, parciales o finales de una materia subido a Github, solo hay que agregale el topic <Tooltip label={repos.length ? `${repos.length} repos` : ''} hasArrow placement='top'><Link isExternal href='https://github.com/topics/fiuba'><Code colorScheme="purple">fiuba</Code></Link></Tooltip> y el código de la materia (ej: <Code colorScheme="purple">7541</Code>). Los topics se editan desde la página principal del repo, a la derecha (donde se cambia la descripción).
       </Text>
 
       <Text color={'gray.600'}>
