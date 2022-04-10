@@ -1,6 +1,7 @@
 import { Box, Heading, Code } from "@chakra-ui/react";
 import React from "react";
 import { DataContext } from "../Contexts";
+import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
 
 const Repos = ({ materiaSelected }) => {
@@ -31,9 +32,7 @@ const Repos = ({ materiaSelected }) => {
         borderRadius={8}
         h="80%"
       >
-        {shownRepos.length > 0 && (
-          <RepoCards repoDetails={shownRepos} />
-      )}
+        {repos.length ? <RepoCards repoDetails={shownRepos} /> : <Loading />}
       </Box>
     </Box>
   );
