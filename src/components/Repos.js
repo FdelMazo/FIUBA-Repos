@@ -31,6 +31,7 @@ const Repos = ({ materiaSelected }) => {
         border="1px dashed purple"
         borderRadius={8}
         h="80%"
+        bg="purple.50"
       >
         {repos.length ? <RepoCards repoDetails={shownRepos} /> : <Loading />}
       </Box>

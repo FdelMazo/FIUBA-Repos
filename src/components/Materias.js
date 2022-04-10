@@ -25,6 +25,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
       overflowY='auto'
       border="1px dashed purple"
       borderRadius={8}
+      bg="purple.50"
     >
       {materias.length ? (
         <>
@@ -33,6 +34,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
               m={4}
               borderRadius={6}
               p={8}
+              bg="white"
               boxShadow={materiaSelected === m.codigo ? "0 0 0 2px violet" : "lg"}
               key={m.codigo}
               onClick={() => {
