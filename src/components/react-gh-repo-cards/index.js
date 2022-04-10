@@ -15,6 +15,7 @@ export default ({
 
         return (
           <div
+            key={user + repoName}
             className={[
               styles["padding-left"],
               styles["padding-right"],
@@ -25,7 +26,6 @@ export default ({
             ].join(" ")}
           >
             <RepoCard
-              key={user + repoName}
               user={user}
               repo={repoName}
               showFullTitle={showFullTitle}

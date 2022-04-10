@@ -39,7 +39,8 @@ const Header = () => {
 
       <Text color={'gray.600'}>
         Entonces, te pido ayuda con dos cosas:
-        <List>
+      </Text>
+      <List color={'gray.600'}>
           <ListItem>
             <Text as="span" color='purple' fontWeight={600} mx={2}>◆</Text>
             Si tenés algun repo con material de FIUBA <Text as="span" color='purple' fontWeight={600}>➔</Text> Agregalo a esta página!
@@ -48,8 +49,7 @@ const Header = () => {
             <Text as="span" color='purple' fontWeight={600} mx={2}>◆</Text>
             Si tenés compañeros de FIUBA <Text as="span" color='purple' fontWeight={600}>➔</Text> Compartiles esta página!
           </ListItem>
-        </List>
-      </Text>
+      </List>
 
       <Text color={'gray.600'}>
         Agregar tu repo es sencillo: si tenés TPs, parciales o finales de una materia subido a Github, solo hay que agregale el topic <Tooltip label={repos.length ? `${repos.length} repos` : ''} hasArrow placement='top'><Link isExternal href='https://github.com/topics/fiuba'><Code colorScheme="purple">fiuba</Code></Link></Tooltip> y el código de la materia (ej: <Code colorScheme="purple">7541</Code>). Los topics se editan desde la página principal del repo, a la derecha (donde se cambia la descripción).
