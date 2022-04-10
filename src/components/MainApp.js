@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import Header from "./Header";
 import Repos from "./Repos";
@@ -8,13 +8,13 @@ const MainApp = () => {
   const [materiaSelected, setMateriaSelected] = React.useState(null);
 
   return (
-    <Flex direction="row" h="100vh" marginX={18}>
-      <Flex direction="column" w="100%">
+    <SimpleGrid minChildWidth="600px" marginX={18}>
+      <Flex direction="column" w="90%">
         <Header />
         <Materias materiaSelected={materiaSelected} setMateriaSelected={setMateriaSelected} />
       </Flex>
       <Repos materiaSelected={materiaSelected} setMateriaSelected={setMateriaSelected} />
-    </Flex>
+    </SimpleGrid>
   );
 };
 

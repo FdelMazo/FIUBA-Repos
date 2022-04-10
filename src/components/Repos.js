@@ -16,7 +16,7 @@ const Repos = ({ materiaSelected }) => {
   }, [materiaSelected, repos]);
 
   return (
-    <Box mt={28} w="70%">
+    <Box mt={28} w="90%" h="80vh">
       <Heading fontWeight={600} fontSize='4xl'>
         Repositorios con topics{" "}
         <Code colorScheme="purple" fontSize="2xl">fiuba</Code>

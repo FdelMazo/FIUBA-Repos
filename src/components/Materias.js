@@ -17,7 +17,8 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
     <SimpleGrid
       m={8}
       columns={2}
-      w="75%"
+      w="90%"
+      h="60vh"
       spacing={4}
       overscrollBehaviorY="contain"
       overflowY='auto'
