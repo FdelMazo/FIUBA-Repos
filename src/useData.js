@@ -19,29 +19,35 @@ const useData = () => {
       });
       const totalCount = (await getTotalCount.json()).total_count;
 
-      const res = await fetch(
-        `https://api.github.com/search/repositories?` + new URLSearchParams({
-          q: "topic:fiuba",
-          sort: "updated",
-          order: "desc",
-          per_page: totalCount,
-        }), {
-        headers: {
-          Accept: "application/vnd.github.v3+json"
-        }
-      });
-      const json = await res.json();
-      if (!json.items) return;
+      const items = [];
+      let i = 1;
+      while (items.length < totalCount) {
+        const res = await fetch(
+          `https://api.github.com/search/repositories?` + new URLSearchParams({
+            q: "topic:fiuba",
+            sort: "updated",
+            order: "desc",
+            page: i,
+            per_page: 100,
+          }), {
+          headers: {
+            Accept: "application/vnd.github.v3+json"
+          }
+        });
+        const json = await res.json();
+        if (!json.items || !json.items.length) break;
+        items.push(...json.items);
+        i++;
+      }
 
-      setRepos(json.items.map(r => ({ user: r.owner.login, repoName: r.name, repoData: r })));
-
-      const codigosMaterias = [...new Set(json.items.flatMap(r =>
+      setRepos(items.map(r => ({ user: r.owner.login, repoName: r.name, repoData: r })));
+      const codigosMaterias = [...new Set(items.flatMap(r =>
         r.topics.filter(t => t.match(/^\d\d\d\d$/))
       ))]
       setMaterias(codigosMaterias.filter(c => MATERIAS[c]).map(c => ({
         codigo: c,
         nombre: MATERIAS[c],
-        count: json.items.filter(r => r.topics.includes(c)).length
+        count: items.filter(r => r.topics.includes(c)).length
       })))
     };
 
