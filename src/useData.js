@@ -8,20 +8,10 @@ const useData = () => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const getTotalCount = await fetch(
-        `https://api.github.com/search/repositories?` + new URLSearchParams({
-          q: "topic:fiuba",
-          per_page: 1,
-        }), {
-        headers: {
-          Accept: "application/vnd.github.v3+json"
-        }
-      });
-      const totalCount = (await getTotalCount.json()).total_count;
-
+      let totalCount = null;
       const items = [];
       let i = 1;
-      while (items.length < totalCount) {
+      while (!totalCount || items.length < totalCount) {
         const res = await fetch(
           `https://api.github.com/search/repositories?` + new URLSearchParams({
             q: "topic:fiuba fork:true",
@@ -36,6 +26,7 @@ const useData = () => {
         });
         const json = await res.json();
         if (!json.items || !json.items.length) break;
+        totalCount = json.total_count;
         items.push(...json.items);
         i++;
       }
