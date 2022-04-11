@@ -4,7 +4,8 @@ import {
   Flex,
   Heading,
   Icon,
-  SimpleGrid
+  SimpleGrid,
+  HStack
 } from "@chakra-ui/react";
 import React from "react";
 import { DataContext } from "../Contexts";
@@ -35,20 +36,25 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
               borderRadius={6}
               p={8}
               bg="white"
-              boxShadow={materiaSelected === m.codigo ? "0 0 0 2px violet" : "lg"}
-              key={m.codigo}
+              boxShadow={materiaSelected?.nombre === m.nombre ? "0 0 0 2px violet" : "lg"}
+              key={m.nombre}
               onClick={() => {
-                if (materiaSelected === m.codigo) {
+                if (materiaSelected?.nombre === m.nombre) {
                   setMateriaSelected(null);
                 } else {
-                  setMateriaSelected(m.codigo);
+                  setMateriaSelected(m);
                 }
               }}
             >
               <Flex justifyContent="space-between">
-                <Text color="purple" fontWeight={600}>
-                  {m.codigo}
-                </Text>
+                <HStack>
+                  {m.codigos.map(c => (
+                    <Text color="purple" fontWeight={600} key={c}>
+                      {c}
+                    </Text>
+                  ))}
+                </HStack>
+
                 <Flex alignItems="center">
                   <Text fontWeight={600}>
                     {m.count}
