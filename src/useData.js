@@ -24,7 +24,7 @@ const useData = () => {
       while (items.length < totalCount) {
         const res = await fetch(
           `https://api.github.com/search/repositories?` + new URLSearchParams({
-            q: "topic:fiuba",
+            q: "topic:fiuba fork:true",
             sort: "updated",
             order: "desc",
             page: i,
