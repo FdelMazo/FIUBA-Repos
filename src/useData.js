@@ -1,5 +1,5 @@
 import React from "react";
-import MATERIAS from "./data/materias";
+import ALIAS_MATERIAS from "./data/materias";
 
 const useData = () => {
   const [materiaSeleccionada, setMateriaSeleccionada] = React.useState(null)
@@ -35,11 +35,24 @@ const useData = () => {
       const codigosMaterias = [...new Set(items.flatMap(r =>
         r.topics.filter(t => t.match(/^\d\d\d\d$/))
       ))]
-      setMaterias(codigosMaterias.filter(c => MATERIAS[c]).map(c => ({
-        codigo: c,
-        nombre: MATERIAS[c],
-        count: items.filter(r => r.topics.includes(c)).length
-      })))
+
+      const processedMaterias = codigosMaterias.filter(c => ALIAS_MATERIAS[c]).reduce((acc, c) => {
+        const nombre = ALIAS_MATERIAS[c];
+        let m = acc.find(mx => mx.nombre === nombre)
+        if (m) {
+          m.count += items.filter(r => r.topics.includes(c)).length
+          m.codigos.push(c)
+        } else {
+          acc.push({
+            codigos: [c],
+            nombre,
+            count: items.filter(r => r.topics.includes(c)).length
+          })
+        }
+        return acc;
+      }, [])
+
+      setMaterias(processedMaterias)
     };
 
     fetchData();

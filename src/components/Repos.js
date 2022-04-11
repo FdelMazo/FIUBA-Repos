@@ -10,7 +10,7 @@ const Repos = ({ materiaSelected }) => {
 
   React.useEffect(() => {
     if (materiaSelected) {
-      setShownRepos(repos.filter(r => r.repoData.topics.includes(materiaSelected)));
+      setShownRepos(repos.filter(r => materiaSelected.codigos.some(c => r.repoData.topics.includes(c))))
     } else {
       setShownRepos(repos);
     }
@@ -18,7 +18,7 @@ const Repos = ({ materiaSelected }) => {
 
   // Para mostrar repos que no tienen código de materia configurado:
   //   setShownRepos(repos.filter(r =>
-  //     !materias.map(m => m.codigo).some(c => r.repoData.topics.includes(c))
+  //     !materias.flatMap(m => m.codigos).some(c => r.repoData.topics.includes(c))
   //   ))
 
   return (
@@ -26,8 +26,9 @@ const Repos = ({ materiaSelected }) => {
       <Heading fontWeight={600} fontSize='4xl'>
         Repositorios con topics{" "}
         <Code colorScheme="purple" fontSize="2xl">fiuba</Code>
-        {" "}
-        <Code colorScheme="purple" fontSize="2xl">{materiaSelected}</Code>
+        {materiaSelected?.codigos.map(c => (
+          <span key={c}>{" "}<Code colorScheme="purple" fontSize="2xl">{c}</Code></span>
+        ))}
       </Heading>
       <Box
         p={8}
