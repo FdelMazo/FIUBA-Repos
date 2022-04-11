@@ -16,6 +16,11 @@ const Repos = ({ materiaSelected }) => {
     }
   }, [materiaSelected, repos]);
 
+  // Para mostrar repos que no tienen código de materia configurado:
+  //   setShownRepos(repos.filter(r =>
+  //     !materias.map(m => m.codigo).some(c => r.repoData.topics.includes(c))
+  //   ))
+
   return (
     <Box mt={28} w="90%" h="80vh">
       <Heading fontWeight={600} fontSize='4xl'>
