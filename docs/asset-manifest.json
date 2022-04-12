@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/FIUBA-Repos/static/css/main.dd9d42f8.chunk.css",
-    "main.js": "/FIUBA-Repos/static/js/main.f8dfde10.chunk.js",
-    "main.js.map": "/FIUBA-Repos/static/js/main.f8dfde10.chunk.js.map",
+    "main.js": "/FIUBA-Repos/static/js/main.7b04f521.chunk.js",
+    "main.js.map": "/FIUBA-Repos/static/js/main.7b04f521.chunk.js.map",
     "runtime-main.js": "/FIUBA-Repos/static/js/runtime-main.6df6fb01.js",
     "runtime-main.js.map": "/FIUBA-Repos/static/js/runtime-main.6df6fb01.js.map",
-    "static/js/2.ec14a21c.chunk.js": "/FIUBA-Repos/static/js/2.ec14a21c.chunk.js",
-    "static/js/2.ec14a21c.chunk.js.map": "/FIUBA-Repos/static/js/2.ec14a21c.chunk.js.map",
+    "static/js/2.d23bbc33.chunk.js": "/FIUBA-Repos/static/js/2.d23bbc33.chunk.js",
+    "static/js/2.d23bbc33.chunk.js.map": "/FIUBA-Repos/static/js/2.d23bbc33.chunk.js.map",
     "index.html": "/FIUBA-Repos/index.html",
-    "precache-manifest.b3c08925cc83b120ec7dc0bc86e217d5.js": "/FIUBA-Repos/precache-manifest.b3c08925cc83b120ec7dc0bc86e217d5.js",
+    "precache-manifest.b066fb3f92c8b642a9e769209aa72c5c.js": "/FIUBA-Repos/precache-manifest.b066fb3f92c8b642a9e769209aa72c5c.js",
     "service-worker.js": "/FIUBA-Repos/service-worker.js",
     "static/css/main.dd9d42f8.chunk.css.map": "/FIUBA-Repos/static/css/main.dd9d42f8.chunk.css.map",
-    "static/js/2.ec14a21c.chunk.js.LICENSE.txt": "/FIUBA-Repos/static/js/2.ec14a21c.chunk.js.LICENSE.txt",
+    "static/js/2.d23bbc33.chunk.js.LICENSE.txt": "/FIUBA-Repos/static/js/2.d23bbc33.chunk.js.LICENSE.txt",
     "static/media/fork.2f84f03e.svg": "/FIUBA-Repos/static/media/fork.2f84f03e.svg",
     "static/media/repo.ad325313.svg": "/FIUBA-Repos/static/media/repo.ad325313.svg",
     "static/media/star.e520dcda.svg": "/FIUBA-Repos/static/media/star.e520dcda.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.6df6fb01.js",
-    "static/js/2.ec14a21c.chunk.js",
+    "static/js/2.d23bbc33.chunk.js",
     "static/css/main.dd9d42f8.chunk.css",
-    "static/js/main.f8dfde10.chunk.js"
+    "static/js/main.7b04f521.chunk.js"
   ]
 }
