@@ -30,7 +30,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
     >
       {materias.length ? (
         <>
-          {materias.sort((a, b) => b.count - a.count).map(m => (
+          {materias.sort((a, b) => b.reponames.size - a.reponames.size).map(m => (
             <Box
               m={4}
               borderRadius={6}
@@ -57,7 +57,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
 
                 <Flex alignItems="center">
                   <Text fontWeight={600}>
-                    {m.count}
+                    {m.reponames.size}
                   </Text>
                   <Icon as={RepoIcon} w={5} h={5} />
                 </Flex>

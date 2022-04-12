@@ -40,13 +40,13 @@ const useData = () => {
         const nombre = ALIAS_MATERIAS[c];
         let m = acc.find(mx => mx.nombre === nombre)
         if (m) {
-          m.count += items.filter(r => r.topics.includes(c)).length
+          m.reponames = new Set([...m.reponames, ...items.filter(r => r.topics.includes(c)).map(r => r.full_name)])
           m.codigos.push(c)
         } else {
           acc.push({
             codigos: [c],
             nombre,
-            count: items.filter(r => r.topics.includes(c)).length
+            reponames: new Set(items.filter(r => r.topics.includes(c)).map(r => r.full_name))
           })
         }
         return acc;
