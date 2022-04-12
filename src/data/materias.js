@@ -629,7 +629,7 @@ export default {
     "9505": "Base de Datos",
     "9506": "Teoría de Algoritmos I",
     "9507": "Teoría de Lenguajes de Programación",
-    "9508": "Taller de Programación",
+    "9508": "Taller de Programación I",
     "9509": "Técnicas de Programación Concurrente I",
     "9510": "Modelación numérica",
     "9511": "Algoritmos y Programación I",
