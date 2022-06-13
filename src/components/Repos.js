@@ -1,4 +1,4 @@
-import { Box, Heading, Code, Center } from "@chakra-ui/react";
+import { Box, Heading, Code, Center, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import { DataContext } from "../Contexts";
 import Loading from "./Loading";
@@ -37,7 +37,7 @@ const Repos = ({ materiaSelected }) => {
         border="1px dashed purple"
         borderRadius={8}
         h="80%"
-        bg="purple.50"
+        bg={useColorModeValue("purple.50", "purple.200")}
       >
         {repos.length ? <Center><RepoCards repoDetails={shownRepos} /></Center> : <Loading />}
       </Box>

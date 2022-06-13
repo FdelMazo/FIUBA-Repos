@@ -5,7 +5,8 @@ import {
   Heading,
   Icon,
   SimpleGrid,
-  HStack
+  HStack,
+  useColorModeValue
 } from "@chakra-ui/react";
 import React from "react";
 import { DataContext } from "../Contexts";
@@ -26,7 +27,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
       overflowY='auto'
       border="1px dashed purple"
       borderRadius={8}
-      bg="purple.50"
+      bg={useColorModeValue("purple.50", "purple.200")}
     >
       {materias.length ? (
         <>
@@ -56,13 +57,13 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
                 </HStack>
 
                 <Flex alignItems="center">
-                  <Text fontWeight={600}>
+                  <Text fontWeight={600} color="gray.800">
                     {m.reponames.size}
                   </Text>
-                  <Icon as={RepoIcon} w={5} h={5} />
+                  <Icon as={RepoIcon} w={5} h={5} color="gray.800" />
                 </Flex>
               </Flex>
-              <Heading fontSize="lg" fontWeight={600}>
+              <Heading fontSize="lg" fontWeight={600} color="gray.800">
                 {m.nombre}
               </Heading>
             </Box>
