@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6f7cd678b3caf06594ac4020f8b8610e",
+    "revision": "d142c98d6716f86d9bd40a3ab228da9b",
     "url": "/FIUBA-Repos/index.html"
   },
   {
-    "revision": "e23b813e4161fb4b3c1c",
+    "revision": "18ede39c1740ef160527",
     "url": "/FIUBA-Repos/static/css/main.dd9d42f8.chunk.css"
   },
   {
-    "revision": "74b91094053d9cb81590",
-    "url": "/FIUBA-Repos/static/js/2.d23bbc33.chunk.js"
+    "revision": "a338b60f9fcca4a78430",
+    "url": "/FIUBA-Repos/static/js/2.2fb062ed.chunk.js"
   },
   {
     "revision": "9b318b6fb13190fe82c0677e9264b3c7",
-    "url": "/FIUBA-Repos/static/js/2.d23bbc33.chunk.js.LICENSE.txt"
+    "url": "/FIUBA-Repos/static/js/2.2fb062ed.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "e23b813e4161fb4b3c1c",
-    "url": "/FIUBA-Repos/static/js/main.7b04f521.chunk.js"
+    "revision": "18ede39c1740ef160527",
+    "url": "/FIUBA-Repos/static/js/main.12935961.chunk.js"
   },
   {
     "revision": "d200253921835887ab24",
