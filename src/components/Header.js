@@ -35,7 +35,7 @@ const Header = () => {
         </Link>
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.200')}>
-        Cuando fue la última vez que dijiste "uh, a ver los TPs del cuatri pasado de Númerico..." y te costó encontrarlos? Exacto! Porque nos falta poder clasificar todos los repos de FIUBA.
+        Cuando fue la última vez que dijiste "uh, a ver los TPs del cuatri pasado de Numérico..." y te costó encontrarlos? Exacto! Porque nos falta poder clasificar todos los repos de FIUBA.
       </Text>
 
       <Text color={useColorModeValue('gray.600', 'gray.200')}>
