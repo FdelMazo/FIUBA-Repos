@@ -2,7 +2,6 @@ import React from "react";
 import ALIAS_MATERIAS from "./data/materias";
 
 const useData = () => {
-  const [materiaSeleccionada, setMateriaSeleccionada] = React.useState(null)
   const [repos, setRepos] = React.useState([])
   const [materias, setMaterias] = React.useState([])
 
@@ -61,8 +60,6 @@ const useData = () => {
   return {
     materias,
     repos,
-    setMateriaSeleccionada,
-    materiaSeleccionada,
   };
 };
 
