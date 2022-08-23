@@ -33,7 +33,6 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
           borderColor: "violet",
         }}
         bg={useColorModeValue("purple.50", "purple.200")}
-        flex="center"
         placeholder="Nombre de materia"
         _placeholder={{ opacity: 0.5, color: "purple.900" }}
         value={nombreFilter}
