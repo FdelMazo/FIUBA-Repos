@@ -24,7 +24,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
 
   return (
     <Flex direction="column">
-      <InputGroup my={2} w="24ch">
+      <InputGroup my={2}>
         <InputLeftElement
           pointerEvents='none'
           children={<Search2Icon color='purple.300' />}
