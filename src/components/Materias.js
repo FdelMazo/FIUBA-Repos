@@ -98,7 +98,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
                       <Icon as={RepoIcon} w={5} h={5} color="gray.800" />
                     </Flex>
                   </Flex>
-                  <Heading fontSize="lg" fontWeight={600} color="gray.800">
+                  <Heading noOfLines={[1, 2, 3]} fontSize="lg" fontWeight={600} color="gray.800">
                     {m.nombre}
                   </Heading>
                 </Box>
