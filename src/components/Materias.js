@@ -1,3 +1,4 @@
+import { Search2Icon } from "@chakra-ui/icons";
 import {
   Box,
   Text,
@@ -8,6 +9,8 @@ import {
   HStack,
   Input,
   useColorModeValue,
+  InputLeftElement,
+  InputGroup,
 } from "@chakra-ui/react";
 import React from "react";
 import { DataContext } from "../Contexts";
@@ -21,19 +24,25 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
 
   return (
     <Flex direction="column">
-      <Input
-        my={2}
-        borderColor="purple"
-        focusBorderColor="violet"
-        _hover={{
-          borderColor: "violet",
-        }}
-        bg={useColorModeValue("purple.50", "purple.200")}
-        placeholder="Nombre de materia"
-        _placeholder={{ opacity: 0.5, color: "purple.900" }}
-        value={nombreFilter}
-        onChange={handleNombreChange}
-      />
+      <InputGroup my={2} w="24ch">
+        <InputLeftElement
+          pointerEvents='none'
+          children={<Search2Icon color='purple.300' />}
+        />
+        <Input
+          borderColor="purple"
+          focusBorderColor="violet"
+          _hover={{
+            borderColor: "violet",
+          }}
+          bg={useColorModeValue("purple.50", "purple.200")}
+          placeholder="Materia"
+          _placeholder={{ opacity: 0.5, color: "purple.900" }}
+          value={nombreFilter}
+          onChange={handleNombreChange}
+        />
+      </InputGroup>
+
       <SimpleGrid
         columns={materias.length ? 2 : 1}
         h="56vh"
