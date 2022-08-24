@@ -22,8 +22,8 @@ const Repos = ({ materiaSelected }) => {
   //   ))
 
   return (
-    <Box mt={28} w="90%" h="80vh">
-      <Heading fontWeight={600} fontSize='4xl'>
+    <Box h="80vh" m={2}>
+      <Heading fontWeight={600} fontSize='4xl' mt={8}>
         Repositorios con topics{" "}
         <Code colorScheme="purple" fontSize="2xl">fiuba</Code>
         {materiaSelected?.codigos.map(c => (
@@ -36,7 +36,8 @@ const Repos = ({ materiaSelected }) => {
         overflowY='auto'
         border="1px dashed purple"
         borderRadius={8}
-        h="80%"
+        h="100%"
+        my={2}
         bg={useColorModeValue("purple.50", "purple.200")}
       >
         {repos.length ? <Center><RepoCards repoDetails={shownRepos} /></Center> : <Loading />}

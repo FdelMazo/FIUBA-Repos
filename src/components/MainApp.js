@@ -28,8 +28,8 @@ const MainApp = () => {
 
 
   return (
-    <SimpleGrid minChildWidth="600px" marginX={18}>
-      <Flex direction="column" w="90%">
+    <SimpleGrid minChildWidth="600px" m={2}>
+      <Flex direction="column" px={4}>
         <Header />
         <Materias materiaSelected={materiaSelected} setMateriaSelected={setMateriaSelected} />
       </Flex>

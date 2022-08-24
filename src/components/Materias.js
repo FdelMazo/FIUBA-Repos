@@ -20,13 +20,9 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
   const { materias } = React.useContext(DataContext);
 
   return (
-    <Flex direction="column" w="90%">
+    <Flex direction="column">
       <Input
-        ml={8}
-        mr={8}
-        mt={4}
-        mb={2}
-        w="90%"
+        my={2}
         borderColor="purple"
         focusBorderColor="violet"
         _hover={{
@@ -39,11 +35,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
         onChange={handleNombreChange}
       />
       <SimpleGrid
-        ml={8}
-        mr={8}
-        mt={2}
         columns={materias.length ? 2 : 1}
-        w="90%"
         h="56vh"
         spacing={4}
         overscrollBehaviorY="contain"
