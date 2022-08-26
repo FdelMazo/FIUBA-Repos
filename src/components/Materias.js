@@ -59,7 +59,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
               .sort((a, b) => b.reponames.size - a.reponames.size)
               .filter((m) =>
                 nombreFilter
-                  ? m.nombre.toLowerCase().includes(nombreFilter.toLowerCase())
+                  ? m.nombre.toLowerCase().includes(nombreFilter.toLowerCase()) || m.codigos.some(c => c.includes(nombreFilter))
                   : true
               )
               .map((m) => (
