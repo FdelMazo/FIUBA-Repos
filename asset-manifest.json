@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/FIUBA-Repos/static/css/main.dd9d42f8.chunk.css",
-    "main.js": "/FIUBA-Repos/static/js/main.8b9d2ff6.chunk.js",
-    "main.js.map": "/FIUBA-Repos/static/js/main.8b9d2ff6.chunk.js.map",
+    "main.js": "/FIUBA-Repos/static/js/main.fa33ec3c.chunk.js",
+    "main.js.map": "/FIUBA-Repos/static/js/main.fa33ec3c.chunk.js.map",
     "runtime-main.js": "/FIUBA-Repos/static/js/runtime-main.6df6fb01.js",
     "runtime-main.js.map": "/FIUBA-Repos/static/js/runtime-main.6df6fb01.js.map",
-    "static/js/2.b21694fa.chunk.js": "/FIUBA-Repos/static/js/2.b21694fa.chunk.js",
-    "static/js/2.b21694fa.chunk.js.map": "/FIUBA-Repos/static/js/2.b21694fa.chunk.js.map",
+    "static/js/2.dfb9dcc5.chunk.js": "/FIUBA-Repos/static/js/2.dfb9dcc5.chunk.js",
+    "static/js/2.dfb9dcc5.chunk.js.map": "/FIUBA-Repos/static/js/2.dfb9dcc5.chunk.js.map",
     "index.html": "/FIUBA-Repos/index.html",
-    "precache-manifest.78a4836386e639a26c2ad432d1c4bcf9.js": "/FIUBA-Repos/precache-manifest.78a4836386e639a26c2ad432d1c4bcf9.js",
+    "precache-manifest.75b71c44d428fb34cddeb77708cd9dff.js": "/FIUBA-Repos/precache-manifest.75b71c44d428fb34cddeb77708cd9dff.js",
     "service-worker.js": "/FIUBA-Repos/service-worker.js",
     "static/css/main.dd9d42f8.chunk.css.map": "/FIUBA-Repos/static/css/main.dd9d42f8.chunk.css.map",
-    "static/js/2.b21694fa.chunk.js.LICENSE.txt": "/FIUBA-Repos/static/js/2.b21694fa.chunk.js.LICENSE.txt",
+    "static/js/2.dfb9dcc5.chunk.js.LICENSE.txt": "/FIUBA-Repos/static/js/2.dfb9dcc5.chunk.js.LICENSE.txt",
     "static/media/fork.2f84f03e.svg": "/FIUBA-Repos/static/media/fork.2f84f03e.svg",
     "static/media/repo.ad325313.svg": "/FIUBA-Repos/static/media/repo.ad325313.svg",
     "static/media/star.e520dcda.svg": "/FIUBA-Repos/static/media/star.e520dcda.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.6df6fb01.js",
-    "static/js/2.b21694fa.chunk.js",
+    "static/js/2.dfb9dcc5.chunk.js",
     "static/css/main.dd9d42f8.chunk.css",
-    "static/js/main.8b9d2ff6.chunk.js"
+    "static/js/main.fa33ec3c.chunk.js"
   ]
 }
