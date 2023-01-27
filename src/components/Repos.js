@@ -5,28 +5,31 @@ import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
 
 const Repos = ({ materiaSelected }) => {
-  const { repos } = React.useContext(DataContext);
+  const { repos, materias } = React.useContext(DataContext);
   const [shownRepos, setShownRepos] = React.useState(repos);
 
+  // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado
+  const [fiubaOnly, setFiubaOnly] = React.useState(false);
+
   React.useEffect(() => {
-    if (materiaSelected) {
+    if (fiubaOnly) {
+      setShownRepos(repos.filter(r =>
+        !materias.flatMap(m => m.codigos).some(c => r.repoData.topics.includes(c))
+      ))
+    } else if (materiaSelected) {
       setShownRepos(repos.filter(r => materiaSelected.codigos.some(c => r.repoData.topics.includes(c))))
     } else {
       setShownRepos(repos);
     }
-  }, [materiaSelected, repos]);
-
-  // Para mostrar repos que no tienen código de materia configurado:
-  //   setShownRepos(repos.filter(r =>
-  //     !materias.flatMap(m => m.codigos).some(c => r.repoData.topics.includes(c))
-  //   ))
+  }, [materiaSelected, repos, materias, fiubaOnly]);
 
   return (
     <Box h="80vh" m={2}>
       <Heading fontWeight={600} fontSize='4xl' mt={8}>
         {shownRepos.length || ''} Repositorios con topics{" "}
-        <Code colorScheme="purple" fontSize="2xl">fiuba</Code>
-        {materiaSelected?.codigos.map(c => (
+        <Code colorScheme="purple" fontSize="2xl" variant={fiubaOnly ? "solid" : "subtle"}
+          onClick={() => setFiubaOnly(!fiubaOnly)}>fiuba {fiubaOnly}</Code>
+        {!fiubaOnly && materiaSelected?.codigos.map(c => (
           <span key={c}>{" "}<Code colorScheme="purple" fontSize="2xl">{c}</Code></span>
         ))}
       </Heading>
