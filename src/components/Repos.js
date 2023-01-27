@@ -24,7 +24,7 @@ const Repos = ({ materiaSelected }) => {
   return (
     <Box h="80vh" m={2}>
       <Heading fontWeight={600} fontSize='4xl' mt={8}>
-        Repositorios con topics{" "}
+        {shownRepos.length || ''} Repositorios con topics{" "}
         <Code colorScheme="purple" fontSize="2xl">fiuba</Code>
         {materiaSelected?.codigos.map(c => (
           <span key={c}>{" "}<Code colorScheme="purple" fontSize="2xl">{c}</Code></span>
