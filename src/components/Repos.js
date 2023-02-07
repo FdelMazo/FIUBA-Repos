@@ -41,7 +41,7 @@ const Repos = ({ materiaSelected }) => {
         borderRadius={8}
         h="100%"
         my={2}
-        bg={useColorModeValue("purple.50", "purple.200")}
+        bg={useColorModeValue("purple.50", "purple.100")}
       >
         {repos.length ? <Center><RepoCards repoDetails={shownRepos} /></Center> : <Loading />}
       </Box>

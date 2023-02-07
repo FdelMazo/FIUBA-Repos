@@ -35,7 +35,8 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
           _hover={{
             borderColor: "violet",
           }}
-          bg={useColorModeValue("purple.50", "purple.200")}
+          color="gray.600"
+          bg={useColorModeValue("purple.50", "purple.100")}
           placeholder="Materia"
           _placeholder={{ opacity: 0.5, color: "purple.900" }}
           value={nombreFilter}
@@ -51,7 +52,7 @@ const Materias = ({ materiaSelected, setMateriaSelected }) => {
         overflowY="auto"
         border="1px dashed purple"
         borderRadius={8}
-        bg={useColorModeValue("purple.50", "purple.200")}
+        bg={useColorModeValue("purple.50", "purple.100")}
       >
         {materias.length ? (
           <>
