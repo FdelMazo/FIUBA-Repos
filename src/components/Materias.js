@@ -11,6 +11,7 @@ import {
   useColorModeValue,
   InputLeftElement,
   InputGroup,
+  Button,
 } from "@chakra-ui/react";
 import React from "react";
 import { DataContext } from "../Contexts";
@@ -20,13 +21,16 @@ import { ReactComponent as RepoIcon } from "./react-gh-repo-cards/github-utils/r
 const Materias = ({ materiaSelected, setMateriaSelected }) => {
   const [nombreFilter, setNombreFilter] = React.useState("");
   const handleNombreChange = (event) => setNombreFilter(event.target.value);
-  const { materias } = React.useContext(DataContext);
+  const { materias, partialLoading } = React.useContext(DataContext);
 
   return (
     <Flex direction="column">
       <InputGroup my={2}>
         <InputLeftElement
           pointerEvents='none'
+          as={Button}
+          variant="ghost"
+          isLoading={partialLoading}
           children={<Search2Icon color='purple.300' />}
         />
         <Input
