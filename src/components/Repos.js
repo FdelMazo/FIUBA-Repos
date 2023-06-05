@@ -1,11 +1,9 @@
 import { Box, Heading, Code, Center, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
-import { DataContext } from "../Contexts";
 import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
 
-const Repos = ({ materiaSelected }) => {
-  const { repos, materias } = React.useContext(DataContext);
+const Repos = ({ materiaSelected, repos, materias }) => {
   const [shownRepos, setShownRepos] = React.useState(repos);
 
   // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado

@@ -3,10 +3,47 @@ import React from "react";
 import Header from "./Header";
 import Repos from "./Repos";
 import Materias from "./Materias";
-import { DataContext } from "../Contexts";
+import ALIAS_MATERIAS from "../data/materias";
+import useData from "../useData";
 
 const MainApp = () => {
-  const { materias } = React.useContext(DataContext);
+  const { data, partialLoading } = useData()
+  const repos = React.useMemo(() => {
+    return data.map(r => ({ user: r.owner.login, repoName: r.name, repoData: r }))
+  }, [data])
+
+  const materias = React.useMemo(() => {
+    const codigosMaterias = [...new Set(data.flatMap(r =>
+      r.topics.filter(t => t.match(/^\d\d\d\d$/))
+    ))]
+
+    let allMaterias = Object.keys(ALIAS_MATERIAS).reduce((acc, c) => {
+      const nombre = ALIAS_MATERIAS[c];
+      let m = acc.find(mx => mx.nombre === nombre)
+      if (m) {
+        m.codigos.push(c)
+      } else {
+        acc.push({
+          codigos: [c],
+          nombre,
+        })
+      }
+      return acc;
+    }, [])
+
+    codigosMaterias.forEach(c => {
+      const materia = allMaterias.find(m => m.codigos.includes(c))
+      if (!materia) return;
+      if (materia.reponames) {
+        materia.reponames = new Set([...materia.reponames, ...data.filter(r => r.topics.includes(c)).map(r => r.full_name)])
+      } else {
+        materia['reponames'] = new Set(data.filter(r => r.topics.includes(c)).map(r => r.full_name))
+      }
+    })
+
+    return allMaterias.filter(m => m.reponames?.size > 0)
+  }, [data])
+
   const [codigoSelected, setCodigoSelected] = React.useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('c')
@@ -24,13 +61,21 @@ const MainApp = () => {
     return materias.find(m => m.codigos.includes(codigoSelected))
   }, [codigoSelected, materias])
 
+  const commonProps = {
+    repos,
+    materias,
+    materiaSelected,
+    partialLoading,
+    setCodigoSelected
+  }
+
   return (
     <SimpleGrid minChildWidth="600px" m={2}>
       <Flex direction="column" px={4}>
-        <Header />
-        <Materias materiaSelected={materiaSelected} setCodigoSelected={setCodigoSelected} />
+        <Header {...commonProps} />
+        <Materias {...commonProps}/>
       </Flex>
-      <Repos materiaSelected={materiaSelected} />
+      <Repos {...commonProps} />
     </SimpleGrid>
   );
 };

@@ -14,14 +14,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 import React from "react";
-import { DataContext } from "../Contexts";
 import LoadingGraph from "./Loading";
 import { ReactComponent as RepoIcon } from "./react-gh-repo-cards/github-utils/repo.svg";
 
-const Materias = ({ materiaSelected, setCodigoSelected }) => {
+const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading }) => {
   const [nombreFilter, setNombreFilter] = React.useState("");
   const handleNombreChange = (event) => setNombreFilter(event.target.value);
-  const { materias, partialLoading } = React.useContext(DataContext);
 
   return (
     <Flex direction="column">

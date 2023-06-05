@@ -11,10 +11,8 @@ import {
   Icon,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { DataContext } from "../Contexts";
 
-const Header = () => {
-  const { repos } = React.useContext(DataContext);
+const Header = ({ repos }) => {
   return (
     <Box>
       <Heading
