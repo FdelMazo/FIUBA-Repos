@@ -19,7 +19,16 @@ import { ReactComponent as RepoIcon } from "./react-gh-repo-cards/github-utils/r
 
 const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading }) => {
   const [nombreFilter, setNombreFilter] = React.useState("");
-  const handleNombreChange = (event) => setNombreFilter(event.target.value);
+  const shownMaterias = React.useMemo(() => {
+    return materias
+      .sort((a, b) => b.reponames.size - a.reponames.size)
+      .filter((m) =>
+        nombreFilter
+          ? m.nombre.toLowerCase().includes(nombreFilter.toLowerCase()) || m.codigos.some(c => c.includes(nombreFilter))
+          : true
+      )
+  }, [materias, nombreFilter]);
+
 
   return (
     <Flex direction="column">
@@ -42,7 +51,7 @@ const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading
           placeholder="Materia"
           _placeholder={{ opacity: 0.5, color: "purple.900" }}
           value={nombreFilter}
-          onChange={handleNombreChange}
+          onChange={(event) => setNombreFilter(event.target.value)}
         />
       </InputGroup>
 
@@ -58,13 +67,7 @@ const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading
       >
         {materias.length ? (
           <>
-            {materias
-              .sort((a, b) => b.reponames.size - a.reponames.size)
-              .filter((m) =>
-                nombreFilter
-                  ? m.nombre.toLowerCase().includes(nombreFilter.toLowerCase()) || m.codigos.some(c => c.includes(nombreFilter))
-                  : true
-              )
+            {shownMaterias
               .map((m) => (
                 <Box
                   maxH="130px"
