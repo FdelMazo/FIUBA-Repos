@@ -20,10 +20,9 @@ const MainApp = () => {
   }, [materias]);
 
   React.useEffect(() => {
-    if (!materiaSelected) return
-    params.set('c', materiaSelected.codigos[0])
-    window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    materiaSelected ? params.set('c', materiaSelected.codigos[0]) : params.delete('c')
+    const url = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname
+    window.history.replaceState({}, '', url);
   }, [materiaSelected]);
 
 
