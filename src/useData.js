@@ -11,8 +11,8 @@ const useData = () => {
       let totalCount = null;
       const items = [];
       let i = 1;
+      setPartialLoading(true)
       while (!totalCount || items.length < totalCount) {
-        setPartialLoading(true)
 
         const res = await fetch(
           `https://api.github.com/search/repositories?` + new URLSearchParams({
@@ -29,7 +29,6 @@ const useData = () => {
 
         const json = await res.json();
         if (!json.items || !json.items.length) {
-          setPartialLoading(false)
           break
         };
         totalCount = json.total_count;
@@ -67,8 +66,8 @@ const useData = () => {
 
         const processedMaterias = allMaterias.filter(m => m.reponames?.size > 0);
         setMaterias(processedMaterias)
-        setPartialLoading(false)
       }
+      setPartialLoading(false)
     };
 
     fetchData();
