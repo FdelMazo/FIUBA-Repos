@@ -4,20 +4,18 @@ import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
 
 const Repos = ({ materiaSelected, repos, materias }) => {
-  const [shownRepos, setShownRepos] = React.useState(repos);
-
   // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado
   const [fiubaOnly, setFiubaOnly] = React.useState(false);
 
-  React.useEffect(() => {
+  const shownRepos = React.useMemo(() => {
     if (fiubaOnly) {
-      setShownRepos(repos.filter(r =>
+      return repos.filter(r =>
         !materias.flatMap(m => m.codigos).some(c => r.repoData.topics.includes(c))
-      ))
+      )
     } else if (materiaSelected) {
-      setShownRepos(repos.filter(r => materiaSelected.codigos.some(c => r.repoData.topics.includes(c))))
+      return repos.filter(r => materiaSelected.codigos.some(c => r.repoData.topics.includes(c)))
     } else {
-      setShownRepos(repos);
+      return repos;
     }
   }, [materiaSelected, repos, materias, fiubaOnly]);
 
