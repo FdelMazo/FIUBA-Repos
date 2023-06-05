@@ -6,33 +6,31 @@ import Materias from "./Materias";
 import { DataContext } from "../Contexts";
 
 const MainApp = () => {
-  const params = new URLSearchParams(window.location.search);
   const { materias } = React.useContext(DataContext);
-
-  const [materiaSelected, setMateriaSelected] = React.useState(null)
-  React.useEffect(() => {
-    const codigo = params.get('c')
-    if (!codigo) return;
-    const materia = materias.find(m => m.codigos.includes(codigo))
-    if (!materia) return;
-    setMateriaSelected(materia)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [materias]);
+  const [codigoSelected, setCodigoSelected] = React.useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('c')
+  })
 
   React.useEffect(() => {
-    materiaSelected ? params.set('c', materiaSelected.codigos[0]) : params.delete('c')
+    const params = new URLSearchParams(window.location.search);
+    codigoSelected ? params.set('c', codigoSelected) : params.delete('c')
     const url = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname
     window.history.replaceState({}, '', url);
-  }, [materiaSelected]);
+  }, [codigoSelected]);
 
+  const materiaSelected = React.useMemo(() => {
+    if (!codigoSelected) return null
+    return materias.find(m => m.codigos.includes(codigoSelected))
+  }, [codigoSelected, materias])
 
   return (
     <SimpleGrid minChildWidth="600px" m={2}>
       <Flex direction="column" px={4}>
         <Header />
-        <Materias materiaSelected={materiaSelected} setMateriaSelected={setMateriaSelected} />
+        <Materias materiaSelected={materiaSelected} setCodigoSelected={setCodigoSelected} />
       </Flex>
-      <Repos materiaSelected={materiaSelected} setMateriaSelected={setMateriaSelected} />
+      <Repos materiaSelected={materiaSelected} />
     </SimpleGrid>
   );
 };
