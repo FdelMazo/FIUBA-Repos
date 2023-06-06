@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import LoadingGraph from "./Loading";
+import LoadingBar from "./LoadingBar";
 import { ReactComponent as RepoIcon } from "./react-gh-repo-cards/github-utils/repo.svg";
 
 const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading }) => {
@@ -38,7 +39,8 @@ const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading
           as={Button}
           variant="ghost"
           isLoading={partialLoading}
-          children={<Search2Icon color='purple.300' />}
+          color="purple.400"
+          children={<Search2Icon />}
         />
         <Input
           borderColor="purple"
@@ -63,10 +65,13 @@ const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading
         overflowY="auto"
         border="1px dashed purple"
         borderRadius={8}
+        position="relative" // Needed for the loading bar
+        overflowX="hidden" // Needed for the loading bar
         bg={useColorModeValue("purple.50", "purple.100")}
       >
         {materias.length ? (
           <>
+            {partialLoading && <LoadingBar />}
             {shownMaterias
               .map((m) => (
                 <Box
