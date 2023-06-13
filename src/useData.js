@@ -30,13 +30,12 @@ const useData = () => {
         };
         totalCount = json.total_count;
         items.push(...json.items);
-        setData([...items, ...data])
+        setData((d) => [...items])
         i++;
       }
       setPartialLoading(false)
     };
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
