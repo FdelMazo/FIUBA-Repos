@@ -3,8 +3,9 @@ import React from "react";
 import Header from "./Header";
 import Repos from "./Repos";
 import Materias from "./Materias";
-import ALIAS_MATERIAS from "../data/materias";
 import useData from "../useData";
+
+const ALIAS_MATERIAS = require('../data/materias.json')
 
 const MainApp = () => {
   const { data, partialLoading } = useData()
