@@ -22,7 +22,7 @@ const Repos = ({ materiaSelected, repos, materias }) => {
   return (
     <Box h="80vh" m={2}>
       <Heading fontWeight={600} fontSize='4xl' mt={8}>
-        {shownRepos.length || ''} repositorios con <i>topics</i>{" "}
+        {shownRepos.length || ''} Repositorios con topics{" "}
         <Code colorScheme="purple" fontSize="2xl" variant={fiubaOnly ? "solid" : "subtle"}
           onClick={() => setFiubaOnly(!fiubaOnly)}>fiuba {fiubaOnly}</Code>
         {!fiubaOnly && materiaSelected?.codigos.map(c => (
