@@ -51,7 +51,7 @@ const Header = ({ repos }) => {
       </List>
 
       <Text mt={1} color={useColorModeValue('gray.600', 'gray.200')}>
-        Agregar tu repo es sencillo: si tenés TPs, parciales o finales de una materia subido a Github, solo tenés que agregarle el topic <Tooltip label={repos.length ? `${repos.length} repos - ${new Set(repos.map(r => r.user)).size} usuarios` : ''} hasArrow placement='top'><Link isExternal href='https://github.com/topics/fiuba'><Code colorScheme="purple">fiuba</Code></Link></Tooltip> y el código de la materia (ej.: <Code colorScheme="purple">7512</Code>). Los topics se editan desde la página principal del repo, a la derecha (donde se cambia la descripción).
+        Agregar tu repo es sencillo: si tenés TPs, parciales o finales de una materia subido a Github, solo tenés que agregarle el topic <Tooltip label={repos.length ? `${repos.length} repos - ${new Set(repos.map(r => r.user)).size} usuarios` : ''} hasArrow placement='top'><Link isExternal href='https://github.com/topics/fiuba'><Code colorScheme="purple">fiuba</Code></Link></Tooltip> y el código de la materia (ej: <Code colorScheme="purple">7512</Code>). Los topics se editan desde la página principal del repo, a la derecha (donde se cambia la descripción).
       </Text>
 
       <Text color={useColorModeValue('gray.600', 'gray.200')}>
