@@ -19,7 +19,7 @@ const Header = ({ repos }) => {
         fontWeight={600}
         fontSize={'6xl'}
       >
-        FIUBA-Repos
+        FIUBA Repos
         <Link
           isExternal
           href="https://github.com/FdelMazo/FIUBA-Repos"
@@ -33,7 +33,7 @@ const Header = ({ repos }) => {
         </Link>
       </Heading>
       <Text color={useColorModeValue('gray.600', 'gray.200')}>
-        Cuando fue la última vez que dijiste "uh, a ver los TPs del cuatri pasado de Numérico..." y te costó encontrarlos? Exacto! Porque nos falta poder clasificar todos los repos de FIUBA.
+        Cuando fue la última vez que dijiste <i>"uh, a ver los TPs del cuatri pasado de Numérico..."</i> y te costó encontrarlos? Exacto! Porque nos falta poder clasificar todos los repos de FIUBA.
       </Text>
 
       <Text color={useColorModeValue('gray.600', 'gray.200')}>
@@ -51,11 +51,11 @@ const Header = ({ repos }) => {
       </List>
 
       <Text mt={1} color={useColorModeValue('gray.600', 'gray.200')}>
-        Agregar tu repo es sencillo: si tenés TPs, parciales o finales de una materia subido a Github, solo hay que agregale el topic <Tooltip label={repos.length ? `${repos.length} repos - ${new Set(repos.map(r => r.user)).size} usuarios` : ''} hasArrow placement='top'><Link isExternal href='https://github.com/topics/fiuba'><Code colorScheme="purple">fiuba</Code></Link></Tooltip> y el código de la materia (ej: <Code colorScheme="purple">7512</Code>). Los topics se editan desde la página principal del repo, a la derecha (donde se cambia la descripción).
+        Agregar tu repo es sencillo: si tenés TPs, parciales o finales de una materia subido a Github, solo tenés que agregarle el topic <Tooltip label={repos.length ? `${repos.length} repos - ${new Set(repos.map(r => r.user)).size} usuarios` : ''} hasArrow placement='top'><Link isExternal href='https://github.com/topics/fiuba'><Code colorScheme="purple">fiuba</Code></Link></Tooltip> y el código de la materia (ej.: <Code colorScheme="purple">7512</Code>). Los topics se editan desde la página principal del repo, a la derecha (donde se cambia la descripción).
       </Text>
 
       <Text color={useColorModeValue('gray.600', 'gray.200')}>
-        Bonus points si en la descripción del repo escribís que cuatrimestre la cursaste y que contiene el repo!
+        Bonus points si en la descripción del repo escribís qué cuatrimestre la cursaste y qué contiene el repo!
       </Text>
 
       <Text color={useColorModeValue('gray.600', 'gray.200')} fontSize="sm">
