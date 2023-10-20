@@ -23,11 +23,13 @@ const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading
   const shownMaterias = React.useMemo(() => {
     return materias
       .sort((a, b) => b.reponames.size - a.reponames.size)
-      .filter((m) =>
-        nombreFilter
-          ? m.nombre.toLowerCase().includes(nombreFilter.toLowerCase()) || m.codigos.some(c => c.includes(nombreFilter))
-          : true
-      )
+      .filter((m) => {
+        const nombreFilterNormalizado = nombreFilter.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase()
+        const nombreMateriaNormalizada = m.nombre.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase()
+        return nombreFilter
+        ? nombreMateriaNormalizada.includes(nombreFilterNormalizado) || m.codigos.some(c => c.includes(nombreFilterNormalizado))
+        : true
+      })
   }, [materias, nombreFilter]);
 
 
