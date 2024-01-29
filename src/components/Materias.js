@@ -86,6 +86,7 @@ const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading
                     cursor: "pointer",
                     bg: "whiteAlpha.700",
                   }}
+                transitionDuration="100ms"
                   boxShadow={
                     materiaSelected?.nombre === m.nombre
                       ? "0 0 0 2px violet"
