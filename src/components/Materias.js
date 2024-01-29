@@ -82,8 +82,8 @@ const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading
                   borderRadius={6}
                   p={8}
                   bg="white"
+                  cursor="pointer"
                   _hover={{
-                    cursor: "pointer",
                     bg: "whiteAlpha.700",
                   }}
                 transitionDuration="100ms"
