@@ -82,6 +82,10 @@ const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading
                   borderRadius={6}
                   p={8}
                   bg="white"
+                  _hover={{
+                    cursor: "pointer",
+                    bg: "whiteAlpha.700",
+                  }}
                   boxShadow={
                     materiaSelected?.nombre === m.nombre
                       ? "0 0 0 2px violet"
