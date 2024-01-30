@@ -18,26 +18,37 @@ import LoadingGraph from "./Loading";
 import LoadingBar from "./LoadingBar";
 import { ReactComponent as RepoIcon } from "./react-gh-repo-cards/github-utils/repo.svg";
 
-const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading }) => {
+const Materias = ({
+  materias,
+  materiaSelected,
+  setCodigoSelected,
+  partialLoading,
+}) => {
   const [nombreFilter, setNombreFilter] = React.useState("");
   const shownMaterias = React.useMemo(() => {
     return materias
       .sort((a, b) => b.reponames.size - a.reponames.size)
       .filter((m) => {
-        const nombreFilterNormalizado = nombreFilter.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase()
-        const nombreMateriaNormalizada = m.nombre.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase()
+        const nombreFilterNormalizado = nombreFilter
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "")
+          .toLowerCase();
+        const nombreMateriaNormalizada = m.nombre
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "")
+          .toLowerCase();
         return nombreFilter
-        ? nombreMateriaNormalizada.includes(nombreFilterNormalizado) || m.codigos.some(c => c.includes(nombreFilterNormalizado))
-        : true
-      })
+          ? nombreMateriaNormalizada.includes(nombreFilterNormalizado) ||
+              m.codigos.some((c) => c.includes(nombreFilterNormalizado))
+          : true;
+      });
   }, [materias, nombreFilter]);
-
 
   return (
     <Flex direction="column">
       <InputGroup my={2}>
         <InputLeftElement
-          pointerEvents='none'
+          pointerEvents="none"
           as={Button}
           variant="ghost"
           isLoading={partialLoading}
@@ -74,54 +85,58 @@ const Materias = ({ materias, materiaSelected, setCodigoSelected, partialLoading
         {materias.length ? (
           <>
             {partialLoading && <LoadingBar />}
-            {shownMaterias
-              .map((m) => (
-                <Box
-                  maxH="130px"
-                  m={4}
-                  borderRadius={6}
-                  p={8}
-                  bg="white"
-                  cursor="pointer"
-                  _hover={{
-                    bg: "whiteAlpha.700",
-                  }}
+            {shownMaterias.map((m) => (
+              <Box
+                maxH="130px"
+                m={4}
+                borderRadius={6}
+                p={8}
+                bg="white"
+                cursor="pointer"
+                _hover={{
+                  bg: "whiteAlpha.700",
+                }}
                 transitionDuration="100ms"
-                  boxShadow={
-                    materiaSelected?.nombre === m.nombre
-                      ? "0 0 0 2px violet"
-                      : "lg"
+                boxShadow={
+                  materiaSelected?.nombre === m.nombre
+                    ? "0 0 0 2px violet"
+                    : "lg"
+                }
+                key={m.nombre}
+                onClick={() => {
+                  if (materiaSelected?.nombre === m.nombre) {
+                    setCodigoSelected(null);
+                  } else {
+                    setCodigoSelected(m.codigos[0]);
                   }
-                  key={m.nombre}
-                  onClick={() => {
-                    if (materiaSelected?.nombre === m.nombre) {
-                      setCodigoSelected(null);
-                    } else {
-                      setCodigoSelected(m.codigos[0]);
-                    }
-                  }}
-                >
-                  <Flex justifyContent="space-between">
-                    <HStack>
-                      {m.codigos.map((c) => (
-                        <Text color="purple" fontWeight={600} key={c}>
-                          {c}
-                        </Text>
-                      ))}
-                    </HStack>
-
-                    <Flex alignItems="center">
-                      <Text fontWeight={600} color="gray.800">
-                        {m.reponames.size}
+                }}
+              >
+                <Flex justifyContent="space-between">
+                  <HStack>
+                    {m.codigos.map((c) => (
+                      <Text color="purple" fontWeight={600} key={c}>
+                        {c}
                       </Text>
-                      <Icon as={RepoIcon} w={5} h={5} color="gray.800" />
-                    </Flex>
+                    ))}
+                  </HStack>
+
+                  <Flex alignItems="center">
+                    <Text fontWeight={600} color="gray.800">
+                      {m.reponames.size}
+                    </Text>
+                    <Icon as={RepoIcon} w={5} h={5} color="gray.800" />
                   </Flex>
-                  <Heading noOfLines={[1, 2, 3]} fontSize="lg" fontWeight={600} color="gray.800">
-                    {m.nombre}
-                  </Heading>
-                </Box>
-              ))}
+                </Flex>
+                <Heading
+                  noOfLines={[1, 2, 3]}
+                  fontSize="lg"
+                  fontWeight={600}
+                  color="gray.800"
+                >
+                  {m.nombre}
+                </Heading>
+              </Box>
+            ))}
           </>
         ) : (
           <LoadingGraph />
