@@ -5,9 +5,7 @@ import { ReactComponent as RepoIcon } from "./github-utils/repo.svg";
 import { ReactComponent as StarIcon } from "./github-utils/star.svg";
 import { ReactComponent as ForkIcon } from "./github-utils/fork.svg";
 
-const RepoCards = ({
-  repoDetails,
-}) => {
+const RepoCards = ({ repoDetails }) => {
   return (
     <div className={styles["row"]}>
       {repoDetails.map((detail) => {
@@ -39,7 +37,6 @@ const RepoCards = ({
 };
 
 const RepoCard = ({ user, repo, showFullTitle, data }) => {
-
   return (
     <div className={styles["main-content"]}>
       <div>
@@ -89,4 +86,4 @@ const RepoCard = ({ user, repo, showFullTitle, data }) => {
   );
 };
 
-export default RepoCards
+export default RepoCards;

@@ -1,6 +1,6 @@
 # [FIUBA-Repos](https://fede.dm/FIUBA-Repos/)
 
- Sencillísima colección de repositorios de cualquier tipo de cursada en FIUBA (TPs/Parciales/Finales/etc)
+Sencillísima colección de repositorios de cualquier tipo de cursada en FIUBA (TPs/Parciales/Finales/etc)
 
 ---
 

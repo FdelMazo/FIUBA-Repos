@@ -1,6 +1,4 @@
-import {
-  Box,
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React from "react";
 
 const injectStyle = (style) => {
@@ -31,7 +29,7 @@ const LoadingBar = () => {
   return (
     <Box
       animation="loadingbar 4s ease-in-out infinite"
-      position='absolute'
+      position="absolute"
       h="4px"
       w="150px"
       bg="purple"
