@@ -8,32 +8,56 @@ import {
 import React from "react";
 import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
+import { sortOptions, SortFeature } from "./SortFeature";
 
 const Repos = ({ materiaSelected, repos, materias }) => {
   // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado
   const [fiubaOnly, setFiubaOnly] = React.useState(false);
+  const [sortOption, setSortOption] = React.useState(sortOptions[1]);
 
   const shownRepos = React.useMemo(() => {
+    const sortByOptions = (a, b) => {
+      const a_data = String(a.repoData[sortOption.shortName]);
+      const b_data = String(b.repoData[sortOption.shortName]);
+
+      // '-' uso el menos aca porque sino compara alreves
+      return -a_data.localeCompare(b_data, undefined, { numeric: "true" });
+    };
+
     if (fiubaOnly) {
-      return repos.filter(
-        (r) =>
-          !materias
-            .flatMap((m) => m.codigos)
-            .some((c) => r.repoData.topics.includes(c)),
-      );
+      return repos
+        .filter(
+          (r) =>
+            !materias
+              .flatMap((m) => m.codigos)
+              .some((c) => r.repoData.topics.includes(c)),
+        )
+        .sort(sortByOptions);
     } else if (materiaSelected) {
-      return repos.filter((r) =>
-        materiaSelected.codigos.some((c) => r.repoData.topics.includes(c)),
-      );
+      return repos
+        .filter((r) =>
+          materiaSelected.codigos.some((c) => r.repoData.topics.includes(c)),
+        )
+        .sort(sortByOptions);
     } else {
-      return repos;
+      return repos.sort(sortByOptions);
     }
-  }, [materiaSelected, repos, materias, fiubaOnly]);
+  }, [materiaSelected, repos, materias, fiubaOnly, sortOption]);
 
   return (
     <Box h="80vh" m={2}>
-      <Heading fontWeight={600} fontSize="4xl" mt={8}>
-        {shownRepos.length || ""} Repositorios con topics{" "}
+      <Box
+        fontWeight={600}
+        fontSize="4xl"
+        mt={8}
+        display="flex"
+        gap="3"
+        alignItems="center"
+        flexWrap="wrap"
+      >
+        <Heading minW="fit-content">
+          {shownRepos.length || ""} Repositorios con topics{" "}
+        </Heading>
         <Code
           colorScheme="purple"
           fontSize="2xl"
@@ -44,14 +68,12 @@ const Repos = ({ materiaSelected, repos, materias }) => {
         </Code>
         {!fiubaOnly &&
           materiaSelected?.codigos.map((c) => (
-            <span key={c}>
-              {" "}
-              <Code colorScheme="purple" fontSize="2xl">
-                {c}
-              </Code>
-            </span>
+            <Code colorScheme="purple" fontSize="2xl" mt="0">
+              {c}
+            </Code>
           ))}
-      </Heading>
+        <SortFeature sortOption={sortOption} setSortOption={setSortOption} />
+      </Box>
       <Box
         p={8}
         overscrollBehaviorY="contain"

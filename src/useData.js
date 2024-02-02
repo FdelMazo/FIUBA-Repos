@@ -6,11 +6,11 @@ const useData = () => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      let totalCount = null;
       const items = [];
-      let i = 1;
+      let totalCount = null;
       setPartialLoading(true);
-      while (!totalCount || items.length < totalCount) {
+
+      for (let i = 1; !totalCount || items.length < totalCount; i++) {
         const res = await fetch(
           `https://api.github.com/search/repositories?` +
             new URLSearchParams({
@@ -28,16 +28,15 @@ const useData = () => {
         );
 
         const json = await res.json();
-        if (!json.items || !json.items.length) {
-          break;
-        }
+        if (!json.items || !json.items.length) break;
         totalCount = json.total_count;
         items.push(...json.items);
-        setData((d) => [...items]);
-        i++;
+        setData([...items]);
       }
+
       setPartialLoading(false);
     };
+
     fetchData();
   }, []);
 
