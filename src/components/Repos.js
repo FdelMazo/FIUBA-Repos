@@ -8,7 +8,7 @@ import {
 import React from "react";
 import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
-import { sortOptions, SortFeature } from "./SortFeature";
+import { sortOptions } from "./SortFeature";
 
 const Repos = ({ materiaSelected, repos, materias }) => {
   // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado
@@ -46,18 +46,8 @@ const Repos = ({ materiaSelected, repos, materias }) => {
 
   return (
     <Box h="80vh" m={2}>
-      <Box
-        fontWeight={600}
-        fontSize="4xl"
-        mt={8}
-        display="flex"
-        gap="3"
-        alignItems="center"
-        flexWrap="wrap"
-      >
-        <Heading minW="fit-content">
-          {shownRepos.length || ""} Repositorios con topics{" "}
-        </Heading>
+      <Heading fontWeight={600} fontSize="4xl" mt={8}>
+        {shownRepos.length || ""} Repositorios con topics{" "}
         <Code
           colorScheme="purple"
           fontSize="2xl"
@@ -68,12 +58,14 @@ const Repos = ({ materiaSelected, repos, materias }) => {
         </Code>
         {!fiubaOnly &&
           materiaSelected?.codigos.map((c) => (
-            <Code colorScheme="purple" fontSize="2xl" mt="0">
-              {c}
-            </Code>
+            <span key={c}>
+              {" "}
+              <Code colorScheme="purple" fontSize="2xl">
+                {c}
+              </Code>
+            </span>
           ))}
-        <SortFeature sortOption={sortOption} setSortOption={setSortOption} />
-      </Box>
+      </Heading>
       <Box
         p={8}
         overscrollBehaviorY="contain"
@@ -82,11 +74,16 @@ const Repos = ({ materiaSelected, repos, materias }) => {
         borderRadius={8}
         h="100%"
         my={2}
+        position="relative"
         bg={useColorModeValue("purple.50", "purple.100")}
       >
         {repos.length ? (
           <Center>
-            <RepoCards repoDetails={shownRepos} />
+            <RepoCards
+              repoDetails={shownRepos}
+              sortOption={sortOption}
+              setSortOption={setSortOption}
+            />
           </Center>
         ) : (
           <Loading />

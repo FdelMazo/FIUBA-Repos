@@ -1,43 +1,30 @@
+import { IconButton, Menu, MenuButton } from "@chakra-ui/react";
 import {
-  Button,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Text,
-} from "@chakra-ui/react";
+  StarIcon,
+  TimeIcon,
+  TriangleDownIcon,
+  TriangleUpIcon
+} from "@chakra-ui/icons";
 
 export const SortFeature = ({ sortOption, setSortOption }) => {
   return (
-    <Menu>
-      <MenuButton
-        as={Button}
-        colorScheme="purple"
-        borderRadius="lg"
-        p="3"
-        minW="fit-content"
-      >
-        <Text as="span" color="whiteAlpha.800">
-          Ordenar por:
-        </Text>{" "}
-        {sortOption.longName}
-      </MenuButton>
-      <MenuList>
-        {sortOptions.map((option) => (
-          <MenuItem
-            key={option.shortName}
-            fontSize="2xl"
-            onClick={() => {
-              setSortOption(
-                sortOptions.find((o) => o.shortName === option.shortName),
-              );
-            }}
-          >
-            <Text>{option.longName}</Text>
-          </MenuItem>
-        ))}
-      </MenuList>
-    </Menu>
+    <IconButton
+      position="absolute"
+      top="10px"
+      right="10px"
+      colorScheme="purple"
+      borderRadius="lg"
+      p="2"
+      aria-label={sortOption.longName}
+      icon={sortOption.shortName == "pushed_at"
+        ? <><TimeIcon /><TriangleUpIcon ml="1" /></>
+        : <><StarIcon /><TriangleDownIcon ml="1" /></>}
+      onClick={() => {
+        setSortOption(
+          sortOption.shortName == sortOptions[0].shortName ? sortOptions[1] : sortOptions[0]
+        );
+      }}
+    />
   );
 };
 
