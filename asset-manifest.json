@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/FIUBA-Repos/static/css/main.f2acb754.css",
-    "main.js": "/FIUBA-Repos/static/js/main.6c05ae59.js",
+    "main.js": "/FIUBA-Repos/static/js/main.fb85da17.js",
     "index.html": "/FIUBA-Repos/index.html",
     "static/media/star.svg": "/FIUBA-Repos/static/media/star.4a3fe70f09ec65359a404b19fcf59b6c.svg",
     "static/media/fork.svg": "/FIUBA-Repos/static/media/fork.eea063160d929286cf2ed8848ed4078d.svg",
     "static/media/repo.svg": "/FIUBA-Repos/static/media/repo.104270698558454ecb1f8b513a285862.svg",
     "main.f2acb754.css.map": "/FIUBA-Repos/static/css/main.f2acb754.css.map",
-    "main.6c05ae59.js.map": "/FIUBA-Repos/static/js/main.6c05ae59.js.map"
+    "main.fb85da17.js.map": "/FIUBA-Repos/static/js/main.fb85da17.js.map"
   },
   "entrypoints": [
     "static/css/main.f2acb754.css",
-    "static/js/main.6c05ae59.js"
+    "static/js/main.fb85da17.js"
   ]
 }
