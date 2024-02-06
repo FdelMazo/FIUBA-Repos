@@ -101,7 +101,7 @@ const SortFeature = ({ sortOption, setSortOption }) => {
         icon={sortOption.icon}
         onClick={() => {
           setSortOption(
-            sortOption.shortName == sortOptions[0].shortName ? sortOptions[1] : sortOptions[0]
+            sortOption.shortName === sortOptions[0].shortName ? sortOptions[1] : sortOptions[0]
           );
         }}
       />
