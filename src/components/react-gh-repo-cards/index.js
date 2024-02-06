@@ -4,13 +4,10 @@ import colors from "./github-utils/colors.json";
 import { ReactComponent as RepoIcon } from "./github-utils/repo.svg";
 import { ReactComponent as StarIcon } from "./github-utils/star.svg";
 import { ReactComponent as ForkIcon } from "./github-utils/fork.svg";
-import { SortFeature } from "../SortFeature";
 
-const RepoCards = ({ repoDetails, sortOption, setSortOption }) => {
+const RepoCards = ({ repoDetails }) => {
   return (
     <div className={styles["row"]}>
-      <SortFeature sortOption={sortOption} setSortOption={setSortOption} />
-
       {repoDetails.map((detail) => {
         const { user, repoName, showFullTitle = true, repoData } = detail;
 

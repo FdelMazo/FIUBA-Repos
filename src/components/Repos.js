@@ -3,12 +3,17 @@ import {
   Heading,
   Code,
   Center,
+  IconButton,
+  Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
+import {
+  StarIcon,
+  TimeIcon,
+} from "@chakra-ui/icons";
 import React from "react";
 import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
-import { sortOptions } from "./SortFeature";
 
 const Repos = ({ materiaSelected, repos, materias }) => {
   // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado
@@ -16,14 +21,6 @@ const Repos = ({ materiaSelected, repos, materias }) => {
   const [sortOption, setSortOption] = React.useState(sortOptions[1]);
 
   const shownRepos = React.useMemo(() => {
-    const sortByOptions = (a, b) => {
-      const a_data = String(a.repoData[sortOption.shortName]);
-      const b_data = String(b.repoData[sortOption.shortName]);
-
-      // '-' uso el menos aca porque sino compara alreves
-      return -a_data.localeCompare(b_data, undefined, { numeric: "true" });
-    };
-
     if (fiubaOnly) {
       return repos
         .filter(
@@ -32,15 +29,15 @@ const Repos = ({ materiaSelected, repos, materias }) => {
               .flatMap((m) => m.codigos)
               .some((c) => r.repoData.topics.includes(c)),
         )
-        .sort(sortByOptions);
+        .sort(sortOption.sortFn);
     } else if (materiaSelected) {
       return repos
         .filter((r) =>
           materiaSelected.codigos.some((c) => r.repoData.topics.includes(c)),
         )
-        .sort(sortByOptions);
+        .sort(sortOption.sortFn);
     } else {
-      return repos.sort(sortByOptions);
+      return repos.sort(sortOption.sortFn);
     }
   }, [materiaSelected, repos, materias, fiubaOnly, sortOption]);
 
@@ -79,11 +76,8 @@ const Repos = ({ materiaSelected, repos, materias }) => {
       >
         {repos.length ? (
           <Center>
-            <RepoCards
-              repoDetails={shownRepos}
-              sortOption={sortOption}
-              setSortOption={setSortOption}
-            />
+            <SortFeature sortOption={sortOption} setSortOption={setSortOption} />
+            <RepoCards repoDetails={shownRepos} />
           </Center>
         ) : (
           <Loading />
@@ -92,5 +86,46 @@ const Repos = ({ materiaSelected, repos, materias }) => {
     </Box>
   );
 };
+
+const SortFeature = ({ sortOption, setSortOption }) => {
+  return (
+    <Tooltip label={`Ordenado por ${sortOption.longName}`}>
+      <IconButton
+        position="absolute"
+        top="0"
+        right="0"
+        variant="link"
+        colorScheme="purple"
+        p="2"
+        aria-label={`Repositorios ordenados por ${sortOption.longName}`}
+        icon={sortOption.icon}
+        onClick={() => {
+          setSortOption(
+            sortOption.shortName == sortOptions[0].shortName ? sortOptions[1] : sortOptions[0]
+          );
+        }}
+      />
+    </Tooltip>
+  );
+};
+
+const sortOptions = [
+  {
+    shortName: "pushed_at",
+    longName: "más reciente",
+    icon: <TimeIcon />,
+    sortFn: (a, b) => {
+      return b.repoData["pushed_at"].localeCompare(a.repoData["pushed_at"]);
+    },
+  },
+  {
+    shortName: "stargazers_count",
+    longName: "más estrellas",
+    icon: <StarIcon />,
+    sortFn: (a, b) => {
+      return b.repoData["stargazers_count"] - a.repoData["stargazers_count"];
+    },
+  },
+];
 
 export default Repos;
