@@ -1,16 +1,21 @@
 import {
-  Box,
-  Heading,
-  Code,
-  Center,
-  IconButton,
-  Tooltip,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import {
+  Search2Icon,
   StarIcon,
   TimeIcon,
 } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Center,
+  Code,
+  Heading,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Tooltip,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
@@ -19,27 +24,35 @@ const Repos = ({ materiaSelected, repos, materias }) => {
   // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado
   const [fiubaOnly, setFiubaOnly] = React.useState(false);
   const [sortOption, setSortOption] = React.useState(sortOptions[1]);
+  const [nombreFilter, setNombreFilter] = React.useState("");
 
   const shownRepos = React.useMemo(() => {
+    let reposToShow = repos
     if (fiubaOnly) {
-      return repos
+      reposToShow = repos
         .filter(
           (r) =>
             !materias
               .flatMap((m) => m.codigos)
               .some((c) => r.repoData.topics.includes(c)),
         )
-        .sort(sortOption.sortFn);
     } else if (materiaSelected) {
-      return repos
+      reposToShow = repos
         .filter((r) =>
           materiaSelected.codigos.some((c) => r.repoData.topics.includes(c)),
         )
-        .sort(sortOption.sortFn);
-    } else {
-      return repos.sort(sortOption.sortFn);
     }
-  }, [materiaSelected, repos, materias, fiubaOnly, sortOption]);
+
+    if (nombreFilter) {
+      reposToShow = reposToShow.filter((r) =>
+        r.user.toLowerCase().includes(nombreFilter.toLowerCase()) ||
+        r.description?.toLowerCase().includes(nombreFilter.toLowerCase()) ||
+        r.repoName.toLowerCase().includes(nombreFilter.toLowerCase())
+      )
+    }
+
+    return reposToShow.sort(sortOption.sortFn)
+  }, [materiaSelected, repos, materias, fiubaOnly, sortOption, nombreFilter]);
 
   return (
     <Box h="80vh" m={2}>
@@ -63,6 +76,29 @@ const Repos = ({ materiaSelected, repos, materias }) => {
             </span>
           ))}
       </Heading>
+      <InputGroup my={2}>
+        <InputLeftElement
+          pointerEvents="none"
+          as={Button}
+          variant="ghost"
+          color="purple.400"
+          children={<Search2Icon />}
+        />
+        <Input
+          borderColor="purple"
+          focusBorderColor="violet"
+          _hover={{
+            borderColor: "violet",
+          }}
+          color="gray.600"
+          bg={useColorModeValue("purple.50", "purple.100")}
+          placeholder="Repositorios"
+          _placeholder={{ opacity: 0.5, color: "purple.900" }}
+          value={nombreFilter}
+          onChange={(event) => setNombreFilter(event.target.value)}
+        />
+      </InputGroup>
+
       <Box
         p={8}
         overscrollBehaviorY="contain"

@@ -13,6 +13,7 @@ const MainApp = () => {
     return data.map((r) => ({
       user: r.owner.login,
       repoName: r.name,
+      description: r.description,
       repoData: r,
     }));
   }, [data]);
