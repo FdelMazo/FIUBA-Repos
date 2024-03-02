@@ -23,7 +23,7 @@ import RepoCards from "./react-gh-repo-cards";
 const Repos = ({ materiaSelected, repos, materias }) => {
   // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado
   const [fiubaOnly, setFiubaOnly] = React.useState(false);
-  const [sortOption, setSortOption] = React.useState(sortOptions[1]);
+  const [sortOption, setSortOption] = React.useState(sortOptions[0]);
   const [nombreFilter, setNombreFilter] = React.useState("");
 
   const shownRepos = React.useMemo(() => {
