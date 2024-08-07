@@ -39,7 +39,7 @@ const Repos = ({ materiaSelected, repos, materias }) => {
     } else if (materiaSelected) {
       reposToShow = repos
         .filter((r) =>
-          materiaSelected.codigos.some((c) => r.repoData.topics.includes(c)),
+          materiaSelected.codigos.some((c) => r.repoData.topics.map(t=>t.toUpperCase()).includes(c)),
         )
     }
 
