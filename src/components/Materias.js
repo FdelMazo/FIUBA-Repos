@@ -27,7 +27,7 @@ const Materias = ({
   const [nombreFilter, setNombreFilter] = React.useState("");
   const shownMaterias = React.useMemo(() => {
     return materias
-      .sort((a, b) => b.reponames.size - a.reponames.size)
+      .sort((a, b) => b.reponames.length - a.reponames.length)
       .filter((m) => {
         const nombreFilterNormalizado = nombreFilter
           .normalize("NFD")
@@ -122,7 +122,7 @@ const Materias = ({
 
                   <Flex alignItems="center">
                     <Text fontWeight={600} color="gray.800">
-                      {m.reponames.size}
+                      {m.reponames.length}
                     </Text>
                     <Icon as={RepoIcon} w={5} h={5} color="gray.800" />
                   </Flex>

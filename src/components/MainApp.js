@@ -30,14 +30,13 @@ const MainApp = () => {
         const reposAntes = valuesAntes ? valuesAntes.reponames : [];
         mapa.set(nombreMateria, {
           codigos: [...new Set([...codigosAntes, codigoEnRepo])],
-          reponames: new Set([...reposAntes, repo.full_name]),
+          reponames: [...new Set([...reposAntes, repo.full_name])],
         });
       });
 
       return mapa;
     }, new Map());
     const materias = Array.from(mapa, ([nombreMateria, objeto]) => ({nombre: nombreMateria, ...objeto}));
-    console.log(materias);
 
     return materias;
   }, [data]);
