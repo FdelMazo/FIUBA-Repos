@@ -19,42 +19,29 @@ const MainApp = () => {
   }, [data]);
 
   const materias = React.useMemo(() => {
-    const codigosMaterias = [
-      ...new Set(
-        data.flatMap((r) => r.topics.filter((t) => t.match(/^\d\d\d\d$/))),
-      ),
-    ];
-
-    let allMaterias = Object.keys(ALIAS_MATERIAS).reduce((acc, c) => {
-      const nombre = ALIAS_MATERIAS[c];
-      let m = acc.find((mx) => mx.nombre === nombre);
-      if (m) {
-        m.codigos.push(c);
-      } else {
-        acc.push({
-          codigos: [c],
-          nombre,
+    const mapa = data.reduce((mapa, repo) => {
+      const codigosEnRepo = repo.topics
+        .map((t) => t.toUpperCase())
+        .filter((t) => ALIAS_MATERIAS.hasOwnProperty(t));
+      codigosEnRepo.forEach((codigoEnRepo) => {
+        const nombreMateria = ALIAS_MATERIAS[codigoEnRepo];
+        const valuesAntes = mapa.get(nombreMateria);
+        const codigosAntes = valuesAntes ? valuesAntes.codigos : [];
+        const reposAntes = valuesAntes ? valuesAntes.reponames : [];
+        mapa.set(nombreMateria, {
+          codigos: [...new Set([...codigosAntes, codigoEnRepo])],
+          reponames: [...new Set([...reposAntes, repo.full_name])],
         });
-      }
-      return acc;
-    }, []);
+      });
 
-    codigosMaterias.forEach((c) => {
-      const materia = allMaterias.find((m) => m.codigos.includes(c));
-      if (!materia) return;
-      if (materia.reponames) {
-        materia.reponames = new Set([
-          ...materia.reponames,
-          ...data.filter((r) => r.topics.includes(c)).map((r) => r.full_name),
-        ]);
-      } else {
-        materia["reponames"] = new Set(
-          data.filter((r) => r.topics.includes(c)).map((r) => r.full_name),
-        );
-      }
-    });
+      return mapa;
+    }, new Map());
+    const materias = Array.from(mapa, ([nombreMateria, objeto]) => ({
+      nombre: nombreMateria,
+      ...objeto,
+    }));
 
-    return allMaterias.filter((m) => m.reponames?.size > 0);
+    return materias;
   }, [data]);
 
   const [codigoSelected, setCodigoSelected] = React.useState(() => {
