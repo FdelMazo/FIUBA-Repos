@@ -20,12 +20,12 @@ const MainApp = () => {
 
   const materias = React.useMemo(() => {
     const mapa = data.reduce((mapa, repo) => {
-      const codigosEnRepo = repo.topics.map((t)=>t.toUpperCase()).filter((t) =>
-        ALIAS_MATERIAS.hasOwnProperty(t),
-      );
+      const codigosEnRepo = repo.topics
+        .map((t) => t.toUpperCase())
+        .filter((t) => ALIAS_MATERIAS.hasOwnProperty(t));
       codigosEnRepo.forEach((codigoEnRepo) => {
         const nombreMateria = ALIAS_MATERIAS[codigoEnRepo];
-        const valuesAntes = mapa.get(nombreMateria)
+        const valuesAntes = mapa.get(nombreMateria);
         const codigosAntes = valuesAntes ? valuesAntes.codigos : [];
         const reposAntes = valuesAntes ? valuesAntes.reponames : [];
         mapa.set(nombreMateria, {
@@ -36,7 +36,10 @@ const MainApp = () => {
 
       return mapa;
     }, new Map());
-    const materias = Array.from(mapa, ([nombreMateria, objeto]) => ({nombre: nombreMateria, ...objeto}));
+    const materias = Array.from(mapa, ([nombreMateria, objeto]) => ({
+      nombre: nombreMateria,
+      ...objeto,
+    }));
 
     return materias;
   }, [data]);

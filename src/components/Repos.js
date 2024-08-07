@@ -1,8 +1,4 @@
-import {
-  Search2Icon,
-  StarIcon,
-  TimeIcon,
-} from "@chakra-ui/icons";
+import { Search2Icon, StarIcon, TimeIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -27,31 +23,32 @@ const Repos = ({ materiaSelected, repos, materias }) => {
   const [nombreFilter, setNombreFilter] = React.useState("");
 
   const shownRepos = React.useMemo(() => {
-    let reposToShow = repos
+    let reposToShow = repos;
     if (fiubaOnly) {
-      reposToShow = repos
-        .filter(
-          (r) =>
-            !materias
-              .flatMap((m) => m.codigos)
-              .some((c) => r.repoData.topics.includes(c)),
-        )
+      reposToShow = repos.filter(
+        (r) =>
+          !materias
+            .flatMap((m) => m.codigos)
+            .some((c) => r.repoData.topics.includes(c)),
+      );
     } else if (materiaSelected) {
-      reposToShow = repos
-        .filter((r) =>
-          materiaSelected.codigos.some((c) => r.repoData.topics.map(t=>t.toUpperCase()).includes(c)),
-        )
+      reposToShow = repos.filter((r) =>
+        materiaSelected.codigos.some((c) =>
+          r.repoData.topics.map((t) => t.toUpperCase()).includes(c),
+        ),
+      );
     }
 
     if (nombreFilter) {
-      reposToShow = reposToShow.filter((r) =>
-        r.user.toLowerCase().includes(nombreFilter.toLowerCase()) ||
-        r.description?.toLowerCase().includes(nombreFilter.toLowerCase()) ||
-        r.repoName.toLowerCase().includes(nombreFilter.toLowerCase())
-      )
+      reposToShow = reposToShow.filter(
+        (r) =>
+          r.user.toLowerCase().includes(nombreFilter.toLowerCase()) ||
+          r.description?.toLowerCase().includes(nombreFilter.toLowerCase()) ||
+          r.repoName.toLowerCase().includes(nombreFilter.toLowerCase()),
+      );
     }
 
-    return reposToShow.sort(sortOption.sortFn)
+    return reposToShow.sort(sortOption.sortFn);
   }, [materiaSelected, repos, materias, fiubaOnly, sortOption, nombreFilter]);
 
   return (
@@ -112,7 +109,10 @@ const Repos = ({ materiaSelected, repos, materias }) => {
       >
         {repos.length ? (
           <Center>
-            <SortFeature sortOption={sortOption} setSortOption={setSortOption} />
+            <SortFeature
+              sortOption={sortOption}
+              setSortOption={setSortOption}
+            />
             <RepoCards repoDetails={shownRepos} />
           </Center>
         ) : (
@@ -137,7 +137,9 @@ const SortFeature = ({ sortOption, setSortOption }) => {
         icon={sortOption.icon}
         onClick={() => {
           setSortOption(
-            sortOption.shortName === sortOptions[0].shortName ? sortOptions[1] : sortOptions[0]
+            sortOption.shortName === sortOptions[0].shortName
+              ? sortOptions[1]
+              : sortOptions[0],
           );
         }}
       />
