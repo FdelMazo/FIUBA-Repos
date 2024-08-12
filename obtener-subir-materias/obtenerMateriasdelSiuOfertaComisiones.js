@@ -1,5 +1,3 @@
-// Para obtener las materias de tu carrera solamente hay que correr este script en inspeccionar -> consola en oferta_comisiones del SIU Guarani de FIUBA (https://guaraniautogestion.fi.uba.ar/g3w/oferta_comisiones)
-
 const periodos = document.querySelectorAll("[periodo]");
 const data = new Map()
 
@@ -13,8 +11,3 @@ periodos.forEach(periodo => {
   })
 })
 console.log(Object.fromEntries(data))
-
-// Luego solo hay que hacer click derecho sobre lo imprimido por consola y "Copiar Objeto"
-
-// Este objeto lo 
-
