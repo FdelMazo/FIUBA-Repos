@@ -5,7 +5,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Construir las rutas absolutas
 materias_a_subir_path = os.path.join(script_dir, "materias-a-subir.json")
-materias_path = os.path.abspath(os.path.join(script_dir, "../materias.json"))
+materias_path = os.path.abspath(os.path.join(script_dir, "../src/data/materias.json"))
 
 import json
 
