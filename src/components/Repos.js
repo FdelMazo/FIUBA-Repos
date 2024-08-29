@@ -16,7 +16,7 @@ import React from "react";
 import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
 
-const Repos = ({ materiaSelected, repos, materias }) => {
+const Repos = ({ materiaSelected, repos }) => {
   // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado
   const [fiubaOnly, setFiubaOnly] = React.useState(false);
   const [sortOption, setSortOption] = React.useState(sortOptions[0]);
@@ -25,18 +25,9 @@ const Repos = ({ materiaSelected, repos, materias }) => {
   const shownRepos = React.useMemo(() => {
     let reposToShow = repos;
     if (fiubaOnly) {
-      reposToShow = repos.filter(
-        (r) =>
-          !materias
-            .flatMap((m) => m.codigos)
-            .some((c) => r.repoData.topics.includes(c.toLowerCase())),
-      );
+      reposToShow = repos.filter((r) => r.topics.codigos.size === 0);
     } else if (materiaSelected) {
-      reposToShow = repos.filter((r) =>
-        materiaSelected.codigos.some((c) =>
-          r.repoData.topics.includes(c.toLowerCase()),
-        ),
-      );
+      reposToShow = repos.filter((r) => materiaSelected.reposIds.has(r.id));
     }
 
     if (nombreFilter) {
@@ -49,7 +40,7 @@ const Repos = ({ materiaSelected, repos, materias }) => {
     }
 
     return reposToShow.sort(sortOption.sortFn);
-  }, [materiaSelected, repos, materias, fiubaOnly, sortOption, nombreFilter]);
+  }, [materiaSelected, repos, fiubaOnly, sortOption, nombreFilter]);
 
   return (
     <Box h="80vh" m={2}>
@@ -63,8 +54,8 @@ const Repos = ({ materiaSelected, repos, materias }) => {
         >
           fiuba {fiubaOnly}
         </Code>
-        {!fiubaOnly &&
-          materiaSelected?.codigos.map((c) => (
+        {!fiubaOnly && materiaSelected &&
+          [...materiaSelected?.codigos].map((c) => (
             <span key={c}>
               {" "}
               <Code colorScheme="purple" fontSize="2xl">
@@ -153,7 +144,7 @@ const sortOptions = [
     longName: "más reciente",
     icon: <TimeIcon />,
     sortFn: (a, b) => {
-      return b.repoData["pushed_at"].localeCompare(a.repoData["pushed_at"]);
+      return b["pushed_at"].localeCompare(a["pushed_at"]);
     },
   },
   {
@@ -161,7 +152,7 @@ const sortOptions = [
     longName: "más estrellas",
     icon: <StarIcon />,
     sortFn: (a, b) => {
-      return b.repoData["stargazers_count"] - a.repoData["stargazers_count"];
+      return b["stargazers_count"] - a["stargazers_count"];
     },
   },
 ];

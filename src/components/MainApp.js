@@ -7,42 +7,46 @@ import useData from "../useData";
 
 const ALIAS_MATERIAS = require("../data/materias.json");
 
+const allCodigos = new Set(
+  Object.keys(ALIAS_MATERIAS).map((c) => c.toLowerCase()),
+);
+
 const MainApp = () => {
   const { data, partialLoading } = useData();
   const repos = React.useMemo(() => {
-    return data.map((r) => ({
-      user: r.owner.login,
-      repoName: r.name,
-      description: r.description,
-      repoData: r,
-    }));
+    return data.map(({ owner, name, topics, ...rest }) => {
+      topics = new Set(topics)
+      return {
+      user: owner.login,
+      repoName: name,
+      topics,
+      codigos: topics.intersection(allCodigos),
+      ...rest,
+    }});
   }, [data]);
 
   const materias = React.useMemo(() => {
-    const mapa = data.reduce((mapa, repo) => {
-      const codigosEnRepo = repo.topics
-        .map((t) => t.toUpperCase())
-        .filter((t) => ALIAS_MATERIAS.hasOwnProperty(t));
-      codigosEnRepo.forEach((codigoEnRepo) => {
-        const nombreMateria = ALIAS_MATERIAS[codigoEnRepo];
-        const valuesAntes = mapa.get(nombreMateria);
-        const codigosAntes = valuesAntes ? valuesAntes.codigos : [];
-        const reposAntes = valuesAntes ? valuesAntes.reponames : [];
-        mapa.set(nombreMateria, {
-          codigos: [...new Set([...codigosAntes, codigoEnRepo])],
-          reponames: [...new Set([...reposAntes, repo.full_name])],
+    let mapMaterias = new Map();
+    for (const [key, value] of Object.entries(ALIAS_MATERIAS)) {
+      if (!mapMaterias.has(value)) {
+        mapMaterias.set(value, {
+          codigos: new Set([key]),
+          reposIds: new Set(
+            repos.filter((r) => r.codigos.has(key)).map((r) => r.id),
+          ),
         });
-      });
+      } else {
+        const materia = mapMaterias.get(value)
+        materia.codigos.add(key);
+        materia.reposIds.union(new Set(repos.filter((r) => r.codigos.has(key)).map((r) => r.id)));
+      }
+    }
 
-      return mapa;
-    }, new Map());
-    const materias = Array.from(mapa, ([nombreMateria, objeto]) => ({
-      nombre: nombreMateria,
+    return Array.from(mapMaterias, ([nombre, objeto]) => ({
+      nombre,
       ...objeto,
     }));
-
-    return materias;
-  }, [data]);
+  }, [repos]);
 
   const [codigoSelected, setCodigoSelected] = React.useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -60,7 +64,8 @@ const MainApp = () => {
 
   const materiaSelected = React.useMemo(() => {
     if (!codigoSelected) return null;
-    return materias.find((m) => m.codigos.includes(codigoSelected));
+    
+    return materias.find((m) => m.codigos.has(codigoSelected) && m.reposIds.size !== 0);
   }, [codigoSelected, materias]);
 
   const commonProps = {

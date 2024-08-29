@@ -27,7 +27,7 @@ const Materias = ({
   const [nombreFilter, setNombreFilter] = React.useState("");
   const shownMaterias = React.useMemo(() => {
     return materias
-      .sort((a, b) => b.reponames.length - a.reponames.length)
+      .sort((a, b) => b.reposIds.size - a.reposIds.size)
       .filter((m) => {
         const nombreFilterNormalizado = nombreFilter
           .normalize("NFD")
@@ -39,8 +39,8 @@ const Materias = ({
           .toLowerCase();
         return nombreFilter
           ? nombreMateriaNormalizada.includes(nombreFilterNormalizado) ||
-              m.codigos.some((c) => c.includes(nombreFilterNormalizado))
-          : true;
+              [...m.codigos].some((c) => c.includes(nombreFilterNormalizado))
+          : m.reposIds.size !== 0;
       });
   }, [materias, nombreFilter]);
 
@@ -92,7 +92,7 @@ const Materias = ({
                 borderRadius={6}
                 p={8}
                 bg="white"
-                cursor="pointer"
+                cursor={m.reposIds.size !== 0 ? "pointer" : "auto"}
                 _hover={{
                   bg: "whiteAlpha.700",
                 }}
@@ -107,13 +107,13 @@ const Materias = ({
                   if (materiaSelected?.nombre === m.nombre) {
                     setCodigoSelected(null);
                   } else {
-                    setCodigoSelected(m.codigos[0]);
+                    setCodigoSelected(m.codigos.values().next().value);
                   }
                 }}
               >
                 <Flex justifyContent="space-between">
                   <HStack>
-                    {m.codigos.map((c) => (
+                    {[...m.codigos].map((c) => (
                       <Text color="purple" fontWeight={600} key={c}>
                         {c}
                       </Text>
@@ -122,7 +122,7 @@ const Materias = ({
 
                   <Flex alignItems="center">
                     <Text fontWeight={600} color="gray.800">
-                      {m.reponames.length}
+                      {m.reposIds.size}
                     </Text>
                     <Icon as={RepoIcon} w={5} h={5} color="gray.800" />
                   </Flex>

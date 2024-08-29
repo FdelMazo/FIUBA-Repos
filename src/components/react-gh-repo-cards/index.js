@@ -9,7 +9,7 @@ const RepoCards = ({ repoDetails }) => {
   return (
     <div className={styles["row"]}>
       {repoDetails.map((detail) => {
-        const { user, repoName, showFullTitle = true, repoData } = detail;
+        const { user, repoName, showFullTitle = true, ...rest } = detail;
 
         return (
           <div
@@ -27,7 +27,7 @@ const RepoCards = ({ repoDetails }) => {
               user={user}
               repo={repoName}
               showFullTitle={showFullTitle}
-              data={repoData}
+              data={rest}
             />
           </div>
         );
