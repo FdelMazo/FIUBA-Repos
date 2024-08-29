@@ -13,40 +13,54 @@ const allCodigos = new Set(
 
 const MainApp = () => {
   const { data, partialLoading } = useData();
-  const repos = React.useMemo(() => {
-    return data.map(({ owner, name, topics, ...rest }) => {
-      topics = new Set(topics)
-      return {
-      user: owner.login,
-      repoName: name,
-      topics,
-      codigos: topics.intersection(allCodigos),
-      ...rest,
-    }});
-  }, [data]);
 
+  const [repos, reposPorCodigo] = React.useMemo(() => {
+    const reposPorCodigo = new Map();
+    const repos = data.map(({ owner, name, topics, id, ...rest }) => {
+      topics = new Set(topics);
+
+      const codigosEnRepo = topics.intersection(allCodigos);
+      codigosEnRepo.forEach((codigo) => {
+        if (!reposPorCodigo.has(codigo)) {
+          reposPorCodigo.set(codigo, new Set());
+        }
+        reposPorCodigo.get(codigo).add(id);
+      });
+
+      return {
+        id,
+        user: owner.login,
+        repoName: name,
+        topics,
+        ...rest,
+      };
+    });
+    return [repos, reposPorCodigo];
+  }, [data]);
+  
   const materias = React.useMemo(() => {
-    let mapMaterias = new Map();
+    const mapMaterias = new Map();
     for (const [key, value] of Object.entries(ALIAS_MATERIAS)) {
       if (!mapMaterias.has(value)) {
         mapMaterias.set(value, {
-          codigos: new Set([key]),
-          reposIds: new Set(
-            repos.filter((r) => r.codigos.has(key)).map((r) => r.id),
-          ),
+          codigos: new Set(),
+          reposIds: new Set(),
         });
-      } else {
-        const materia = mapMaterias.get(value)
-        materia.codigos.add(key);
-        materia.reposIds.union(new Set(repos.filter((r) => r.codigos.has(key)).map((r) => r.id)));
       }
+      const ids = reposPorCodigo.get(key)
+      const materia = mapMaterias.get(value)
+      mapMaterias.set(value, {
+        codigos: materia.codigos.add(key),
+        reposIds: ids && ids?.size ? materia.reposIds.union(ids) : materia.reposIds,
+      });
+      
     }
 
     return Array.from(mapMaterias, ([nombre, objeto]) => ({
       nombre,
       ...objeto,
     }));
-  }, [repos]);
+  }, [reposPorCodigo]);
 
   const [codigoSelected, setCodigoSelected] = React.useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -64,8 +78,10 @@ const MainApp = () => {
 
   const materiaSelected = React.useMemo(() => {
     if (!codigoSelected) return null;
-    
-    return materias.find((m) => m.codigos.has(codigoSelected) && m.reposIds.size !== 0);
+
+    return materias.find(
+      (m) => m.codigos.has(codigoSelected) && m.reposIds.size !== 0,
+    );
   }, [codigoSelected, materias]);
 
   const commonProps = {
