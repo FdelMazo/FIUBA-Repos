@@ -7,6 +7,10 @@ import useData from "../useData";
 
 const ALIAS_MATERIAS = require("../data/materias.json");
 
+const allCodigos = new Set(
+  Object.keys(ALIAS_MATERIAS).map((c) => c.toLowerCase()),
+);
+
 const MainApp = () => {
   const { data, partialLoading } = useData();
   const repos = React.useMemo(() => {
@@ -14,35 +18,34 @@ const MainApp = () => {
       user: r.owner.login,
       repoName: r.name,
       description: r.description,
+      codigos: new Set(r.topics).intersection(allCodigos),
       repoData: r,
     }));
   }, [data]);
 
   const materias = React.useMemo(() => {
-    const mapa = data.reduce((mapa, repo) => {
-      const codigosEnRepo = repo.topics
-        .map((t) => t.toUpperCase())
-        .filter((t) => ALIAS_MATERIAS.hasOwnProperty(t));
-      codigosEnRepo.forEach((codigoEnRepo) => {
-        const nombreMateria = ALIAS_MATERIAS[codigoEnRepo];
+    const mapa = repos.reduce((mapa, repo) => {
+      repo.codigos.forEach((codigoEnRepo) => {
+        const nombreMateria = ALIAS_MATERIAS[codigoEnRepo.toUpperCase()];
         const valuesAntes = mapa.get(nombreMateria);
         const codigosAntes = valuesAntes ? valuesAntes.codigos : [];
         const reposAntes = valuesAntes ? valuesAntes.reponames : [];
+        
         mapa.set(nombreMateria, {
           codigos: [...new Set([...codigosAntes, codigoEnRepo])],
-          reponames: [...new Set([...reposAntes, repo.full_name])],
+          reponames: [...new Set([...reposAntes, repo.repoData.full_name])],
         });
       });
 
       return mapa;
     }, new Map());
-    const materias = Array.from(mapa, ([nombreMateria, objeto]) => ({
-      nombre: nombreMateria,
+    const materias = Array.from(mapa, ([nombre, objeto]) => ({
+      nombre,
       ...objeto,
     }));
 
     return materias;
-  }, [data]);
+  }, [repos]);
 
   const [codigoSelected, setCodigoSelected] = React.useState(() => {
     const params = new URLSearchParams(window.location.search);
