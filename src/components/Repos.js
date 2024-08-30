@@ -108,13 +108,22 @@ const Repos = ({ materiaSelected, repos, materias }) => {
         bg={useColorModeValue("purple.50", "purple.100")}
       >
         {repos.length ? (
-          <Center>
-            <SortFeature
-              sortOption={sortOption}
-              setSortOption={setSortOption}
-            />
-            <RepoCards repoDetails={shownRepos} />
-          </Center>
+          shownRepos.length ? (
+            <Center>
+              <SortFeature
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+              />
+              <RepoCards repoDetails={shownRepos} />
+            </Center>
+          ) : (
+            <Center height="100%" gap={2}>
+              Esta materia no tiene repositorios... agrega uno con el tag{" "}
+              <Code colorScheme="purple">
+                {materiaSelected?.codigos.at(-1)}
+              </Code>
+            </Center>
+          )
         ) : (
           <Loading />
         )}
