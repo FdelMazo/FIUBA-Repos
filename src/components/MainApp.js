@@ -23,29 +23,40 @@ const MainApp = () => {
     }));
   }, [data]);
 
+  // Es un Map<string, {codigos, reponames}>
+  // Esto permite que se muestren todos los codigos de una materia con un mismo nombre
+  const materiasPorNombre = React.useMemo(() => {
+    const materiasPorNombre = new Map();
+    for (const [key, value] of Object.entries(ALIAS_MATERIAS)) {
+      if (!materiasPorNombre.has(value)) {
+        materiasPorNombre.set(value, {
+          codigos: new Set(),
+          reponames: new Set(),
+        });
+      }
+      materiasPorNombre.get(value).codigos.add(key);
+    }
+    return materiasPorNombre;
+  }, []);
+
   const materias = React.useMemo(() => {
-    const mapa = repos.reduce((mapa, repo) => {
+    // Agregamos los reponames al materiasPorNombre
+    repos.forEach((repo) => {
       repo.codigos.forEach((codigoEnRepo) => {
         const nombreMateria = ALIAS_MATERIAS[codigoEnRepo.toUpperCase()];
-        const valuesAntes = mapa.get(nombreMateria);
-        const codigosAntes = valuesAntes ? valuesAntes.codigos : [];
-        const reposAntes = valuesAntes ? valuesAntes.reponames : [];
-        
-        mapa.set(nombreMateria, {
-          codigos: [...new Set([...codigosAntes, codigoEnRepo])],
-          reponames: [...new Set([...reposAntes, repo.repoData.full_name])],
-        });
+        const materiaMap = materiasPorNombre.get(nombreMateria)
+        materiaMap.reponames = materiaMap.reponames.add(repo.repoData.full_name)
       });
-
-      return mapa;
-    }, new Map());
-    const materias = Array.from(mapa, ([nombre, objeto]) => ({
+    });
+    // Transformamos materiasPorNombre (Map) a arreglo de objetos
+    const materias = Array.from(materiasPorNombre, ([nombre, {codigos, reponames}]) => ({
       nombre,
-      ...objeto,
+      reponames: [...reponames],
+      codigos: [...codigos],
     }));
 
     return materias;
-  }, [repos]);
+  }, [repos, materiasPorNombre]);
 
   const [codigoSelected, setCodigoSelected] = React.useState(() => {
     const params = new URLSearchParams(window.location.search);
