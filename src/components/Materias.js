@@ -40,7 +40,7 @@ const Materias = ({
         return nombreFilter
           ? nombreMateriaNormalizada.includes(nombreFilterNormalizado) ||
               m.codigos.some((c) => c.includes(nombreFilterNormalizado))
-          : true;
+          : m.reponames.length !== 0;
       });
   }, [materias, nombreFilter]);
 
