@@ -7,7 +7,7 @@ import useData from "../useData";
 
 const ALIAS_MATERIAS = require("../data/materias.json");
 
-const allCodigos = new Set(
+const CODIGOS = new Set(
   Object.keys(ALIAS_MATERIAS).map((c) => c.toLowerCase()),
 );
 
