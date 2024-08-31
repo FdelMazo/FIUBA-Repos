@@ -16,7 +16,7 @@ import React from "react";
 import Loading from "./Loading";
 import RepoCards from "./react-gh-repo-cards";
 
-const Repos = ({ materiaSelected, repos, materias }) => {
+const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
   // Obscure func: tocar en el tag "fiuba" del header hace que se muestren los repos que no tienen código de materia configurado
   const [fiubaOnly, setFiubaOnly] = React.useState(false);
   const [sortOption, setSortOption] = React.useState(sortOptions[0]);
@@ -107,22 +107,22 @@ const Repos = ({ materiaSelected, repos, materias }) => {
         position="relative"
         bg={useColorModeValue("purple.50", "purple.100")}
       >
-        {repos.length ? (
-          shownRepos.length ? (
-            <Center>
-              <SortFeature
-                sortOption={sortOption}
-                setSortOption={setSortOption}
-              />
-              <RepoCards repoDetails={shownRepos} />
-            </Center>
-          ) : (
-            <Center height="100%" gap={2}>
-              <NoReposMessage codigos={materiaSelected.codigos} />
-            </Center>
-          )
+        {shownRepos.length ? (
+          <Center>
+            <SortFeature
+              sortOption={sortOption}
+              setSortOption={setSortOption}
+            />
+            <RepoCards repoDetails={shownRepos} />
+          </Center>
         ) : (
-          <Loading />
+          <Center height="100%" gap={2}>
+            {partialLoading ? (
+              <Loading />
+            ) : (
+              <NoReposMessage codigos={materiaSelected.codigos} />
+            )}
+          </Center>
         )}
       </Box>
     </Box>
