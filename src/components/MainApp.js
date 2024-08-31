@@ -18,7 +18,7 @@ const MainApp = () => {
       user: r.owner.login,
       repoName: r.name,
       description: r.description,
-      codigos: new Set(r.topics).intersection(allCodigos),
+      codigos: new Set(r.topics).intersection(CODIGOS),
       repoData: r,
     }));
   }, [data]);
@@ -28,13 +28,13 @@ const MainApp = () => {
   const materiasPorNombre = React.useMemo(() => {
     const materiasPorNombre = new Map();
     for (const [codigo, nombreMateria] of Object.entries(ALIAS_MATERIAS)) {
-      if (!materiasPorNombre.has(value)) {
-        materiasPorNombre.set(value, {
+      if (!materiasPorNombre.has(nombreMateria)) {
+        materiasPorNombre.set(nombreMateria, {
           codigos: new Set(),
           reponames: new Set(),
         });
       }
-      materiasPorNombre.get(value).codigos.add(key);
+      materiasPorNombre.get(nombreMateria).codigos.add(codigo);
     }
     return materiasPorNombre;
   }, []);
@@ -44,7 +44,7 @@ const MainApp = () => {
     repos.forEach((repo) => {
       repo.codigos.forEach((codigoEnRepo) => {
         const nombreMateria = ALIAS_MATERIAS[codigoEnRepo.toUpperCase()];
-        materiasPorNombre.get(nombreMateria).reponames.add(full_name);
+        materiasPorNombre.get(nombreMateria).reponames.add(repo.repoData.full_name);
       });
     });
     // Transformamos materiasPorNombre (Map) a arreglo de objetos
