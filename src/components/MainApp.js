@@ -44,8 +44,7 @@ const MainApp = () => {
     repos.forEach((repo) => {
       repo.codigos.forEach((codigoEnRepo) => {
         const nombreMateria = ALIAS_MATERIAS[codigoEnRepo.toUpperCase()];
-        const materiaMap = materiasPorNombre.get(nombreMateria)
-        materiaMap.reponames = materiaMap.reponames.add(repo.repoData.full_name)
+        materiasPorNombre.get(nombreMateria).reponames.add(full_name);
       });
     });
     // Transformamos materiasPorNombre (Map) a arreglo de objetos
