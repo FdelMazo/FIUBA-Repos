@@ -27,7 +27,7 @@ const MainApp = () => {
   // Esto permite que se muestren todos los codigos de una materia con un mismo nombre
   const materiasPorNombre = React.useMemo(() => {
     const materiasPorNombre = new Map();
-    for (const [key, value] of Object.entries(ALIAS_MATERIAS)) {
+    for (const [codigo, nombreMateria] of Object.entries(ALIAS_MATERIAS)) {
       if (!materiasPorNombre.has(value)) {
         materiasPorNombre.set(value, {
           codigos: new Set(),
