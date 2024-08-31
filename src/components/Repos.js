@@ -118,10 +118,7 @@ const Repos = ({ materiaSelected, repos, materias }) => {
             </Center>
           ) : (
             <Center height="100%" gap={2}>
-              Esta materia no tiene repositorios... agrega uno con el tag{" "}
-              <Code colorScheme="purple">
-                {materiaSelected?.codigos.at(-1)}
-              </Code>
+              <NoReposMessage codigos={materiaSelected.codigos} />
             </Center>
           )
         ) : (
@@ -174,5 +171,34 @@ const sortOptions = [
     },
   },
 ];
+
+const NoReposMessage = ({ codigos }) => (
+  <>
+    {codigos.length === 1 ? (
+      <>
+        <p>
+          Esta materia no tiene repositorios... Agrega el primero con el tag
+        </p>
+        <Code textIndent={0} colorScheme="purple">
+          {codigos[0]}
+        </Code>
+      </>
+    ) : (
+      <div>
+        <p>
+          Esta materia no tiene repositorios... Agrega el primero con cualquiera
+          de los tags...
+        </p>
+        <Center gap={2}>
+          {codigos.map((c) => (
+            <Code textIndent={0} colorScheme="purple">
+              {c}
+            </Code>
+          ))}
+        </Center>
+      </div>
+    )}
+  </>
+);
 
 export default Repos;
