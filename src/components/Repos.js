@@ -108,13 +108,13 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
         bg={useColorModeValue("purple.50", "purple.100")}
       >
         {shownRepos.length ? (
-          <Center>
+          <>
             <SortFeature
               sortOption={sortOption}
               setSortOption={setSortOption}
             />
             <RepoCards repoDetails={shownRepos} />
-          </Center>
+          </>
         ) : (
           <Center height="100%" gap={2}>
             {partialLoading ? (
