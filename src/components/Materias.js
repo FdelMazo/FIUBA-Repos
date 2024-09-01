@@ -29,18 +29,22 @@ const Materias = ({
     return materias
       .sort((a, b) => b.reponames.length - a.reponames.length)
       .filter((m) => {
-        const nombreFilterNormalizado = nombreFilter
-          .normalize("NFD")
-          .replace(/\p{Diacritic}/gu, "")
-          .toLowerCase();
-        const nombreMateriaNormalizada = m.nombre
-          .normalize("NFD")
-          .replace(/\p{Diacritic}/gu, "")
-          .toLowerCase();
-        return nombreFilter
-          ? nombreMateriaNormalizada.includes(nombreFilterNormalizado) ||
-              m.codigos.some((c) => c.includes(nombreFilterNormalizado))
-          : m.reponames.length !== 0;
+        if (nombreFilter) {
+          // Si se escribe en el buscador, que solo aparezcan materias que incluyen el nombre o codigo buscado
+          function normalize(texto) {
+            return texto
+              .normalize("NFD")
+              .replace(/\p{Diacritic}/gu, "")
+              .toLowerCase();
+          }
+          const f = normalize(nombreFilter);
+          const filterInName = normalize(m.nombre).includes(f);
+          const filterInCodes = m.codigos.some((c) => c.includes(f));
+          return filterInName || filterInCodes;
+        } else {
+          // Si NO se escribe en el buscador, que solo aparezcan materias que SI tienen repositorios
+          return m.reponames.length !== 0;
+        }
       });
   }, [materias, nombreFilter]);
 
