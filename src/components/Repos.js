@@ -117,10 +117,10 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
           </>
         ) : (
           <Center height="100%" gap={2}>
-            {partialLoading ? (
-              <Loading />
-            ) : (
+            {!partialLoading && materiaSelected ? (
               <NoReposMessage codigos={materiaSelected.codigos} />
+            ) : (
+              <Loading />
             )}
           </Center>
         )}
@@ -173,32 +173,19 @@ const sortOptions = [
 ];
 
 const NoReposMessage = ({ codigos }) => (
-  <>
-    {codigos.length === 1 ? (
-      <>
-        <p>
-          Esta materia no tiene repositorios... Agrega el primero con el tag
-        </p>
-        <Code textIndent={0} colorScheme="purple">
-          {codigos[0]}
+  <div>
+    <p>
+      Esta materia no tiene repositorios... Agrega el primero con
+      {codigos.length === 1 ? " el tag" : " cualquiera de los tags"}...
+    </p>
+    <Center gap={2}>
+      {codigos.map((c) => (
+        <Code key={c} textIndent={0} colorScheme="purple">
+          {c}
         </Code>
-      </>
-    ) : (
-      <div>
-        <p>
-          Esta materia no tiene repositorios... Agrega el primero con cualquiera
-          de los tags...
-        </p>
-        <Center gap={2}>
-          {codigos.map((c) => (
-            <Code textIndent={0} colorScheme="purple">
-              {c}
-            </Code>
-          ))}
-        </Center>
-      </div>
-    )}
-  </>
+      ))}
+    </Center>
+  </div>
 );
 
 export default Repos;
