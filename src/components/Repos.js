@@ -175,7 +175,7 @@ const sortOptions = [
 const NoReposMessage = ({ codigos }) => (
   <div>
     <p>
-      Esta materia aún no tiene repositorios. <br /> Agrega el primero con
+      Esta materia aún no tiene repositorios. <br /> Agregá el primero con
       {codigos.length === 1 ? " el tag" : " cualquiera de los tags"}
       {codigos.map((c) => (
         <Code key={c} mx={1} textIndent={0} colorScheme="purple">
