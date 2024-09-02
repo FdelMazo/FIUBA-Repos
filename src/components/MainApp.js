@@ -7,6 +7,10 @@ import useData from "../useData";
 
 const ALIAS_MATERIAS = require("../data/materias.json");
 
+const CODIGOS = new Set(
+  Object.keys(ALIAS_MATERIAS).map((c) => c.toLowerCase()),
+);
+
 const MainApp = () => {
   const { data, partialLoading } = useData();
   const repos = React.useMemo(() => {
@@ -14,35 +18,44 @@ const MainApp = () => {
       user: r.owner.login,
       repoName: r.name,
       description: r.description,
+      codigos: new Set(r.topics).intersection(CODIGOS),
       repoData: r,
     }));
   }, [data]);
 
-  const materias = React.useMemo(() => {
-    const mapa = data.reduce((mapa, repo) => {
-      const codigosEnRepo = repo.topics
-        .map((t) => t.toUpperCase())
-        .filter((t) => ALIAS_MATERIAS.hasOwnProperty(t));
-      codigosEnRepo.forEach((codigoEnRepo) => {
-        const nombreMateria = ALIAS_MATERIAS[codigoEnRepo];
-        const valuesAntes = mapa.get(nombreMateria);
-        const codigosAntes = valuesAntes ? valuesAntes.codigos : [];
-        const reposAntes = valuesAntes ? valuesAntes.reponames : [];
-        mapa.set(nombreMateria, {
-          codigos: [...new Set([...codigosAntes, codigoEnRepo])],
-          reponames: [...new Set([...reposAntes, repo.full_name])],
+  // Es un Map<string, {codigos, reponames}>
+  // Esto permite que se muestren todos los codigos de una materia con un mismo nombre
+  const materiasPorNombre = React.useMemo(() => {
+    const materiasPorNombre = new Map();
+    for (const [codigo, nombreMateria] of Object.entries(ALIAS_MATERIAS)) {
+      if (!materiasPorNombre.has(nombreMateria)) {
+        materiasPorNombre.set(nombreMateria, {
+          codigos: new Set(),
+          reponames: new Set(),
         });
-      });
+      }
+      materiasPorNombre.get(nombreMateria).codigos.add(codigo);
+    }
+    return materiasPorNombre;
+  }, []);
 
-      return mapa;
-    }, new Map());
-    const materias = Array.from(mapa, ([nombreMateria, objeto]) => ({
-      nombre: nombreMateria,
-      ...objeto,
+  const materias = React.useMemo(() => {
+    // Agregamos los reponames al materiasPorNombre
+    repos.forEach((repo) => {
+      repo.codigos.forEach((codigoEnRepo) => {
+        const nombreMateria = ALIAS_MATERIAS[codigoEnRepo.toUpperCase()];
+        materiasPorNombre.get(nombreMateria).reponames.add(repo.repoData.full_name);
+      });
+    });
+    // Transformamos materiasPorNombre (Map) a arreglo de objetos
+    const materias = Array.from(materiasPorNombre, ([nombre, {codigos, reponames}]) => ({
+      nombre,
+      reponames: [...reponames],
+      codigos: [...codigos],
     }));
 
     return materias;
-  }, [data]);
+  }, [repos, materiasPorNombre]);
 
   const [codigoSelected, setCodigoSelected] = React.useState(() => {
     const params = new URLSearchParams(window.location.search);
