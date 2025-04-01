@@ -25,8 +25,18 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
   const [languageFilter, setLanguageFilter] = React.useState("");
 
   React.useEffect(() => {
-    setLanguageFilter("")
-  }, [materiaSelected])
+    if (materiaSelected) {
+      const newMateriaLanguages = [...new Set(repos
+        .filter(r => materiaSelected.codigos.some(c => r.repoData.topics.includes(c.toLowerCase())))
+        .filter(repo => !!repo.language)
+        .map(repo => repo.language)
+      )];
+
+      if (languageFilter && !newMateriaLanguages.includes(languageFilter)) {
+        setLanguageFilter("");
+      }
+    }
+  }, [materiaSelected, repos, languageFilter])
 
   const shownRepos = React.useMemo(() => {
     let reposToShow = repos;
@@ -44,13 +54,18 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
         ),
       );
     }
+    return reposToShow;
+  }, [repos, materiaSelected, materias, fiubaOnly]);
+
+  const filteredRepos = React.useMemo(() => {
+    let repos = shownRepos;
 
     if (languageFilter) {
-      reposToShow = reposToShow.filter(r => r.language === languageFilter);
+      repos = repos.filter(r => r.language === languageFilter);
     }
 
     if (nombreFilter) {
-      reposToShow = reposToShow.filter(
+      repos = repos.filter(
         (r) =>
           r.user.toLowerCase().includes(nombreFilter.toLowerCase()) ||
           r.description?.toLowerCase().includes(nombreFilter.toLowerCase()) ||
@@ -58,13 +73,17 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
       );
     }
 
-    return reposToShow.sort(sortOption.sortFn);
-  }, [materiaSelected, repos, materias, fiubaOnly, sortOption, nombreFilter, languageFilter]);
+    return repos.sort(sortOption.sortFn);
+  }, [shownRepos, languageFilter, nombreFilter, sortOption]);
+
+  const allLanguages = React.useMemo(() => {
+    return [...new Set(shownRepos.filter(repo => !!repo.language).map(repo => repo.language))].sort()
+  }, [shownRepos])
 
   return (
     <Box h="80vh" m={2}>
       <Heading fontWeight={600} fontSize="4xl" mt={8}>
-        {shownRepos.length || ""} Repositorios con topics{" "}
+        {filteredRepos.length || ""} Repositorios con topics{" "}
         <Code
           colorScheme="purple"
           fontSize="2xl"
@@ -117,16 +136,17 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
         my={2}
         bg={useColorModeValue("purple.50", "purple.100")}
       >
-        {shownRepos.length ? (
+        {filteredRepos.length ? (
           <>
-            <SortFeature
+            <DisplayFeature
               sortOption={sortOption}
               setSortOption={setSortOption}
               languageFilter={languageFilter}
               setLanguageFilter={setLanguageFilter}
-              repos={shownRepos}
+              repos={filteredRepos}
+              allLanguages={allLanguages}
             />
-            <RepoCards repoDetails={shownRepos} />
+            <RepoCards repoDetails={filteredRepos} />
           </>
         ) : (
           <Center height="100%" gap={2}>
@@ -142,11 +162,7 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
   );
 };
 
-const SortFeature = ({ sortOption, setSortOption, languageFilter, setLanguageFilter, repos }) => {
-  const uniqueLanguages = React.useMemo(() => {
-    return [...new Set(repos.filter(repo => !!repo.language).map(repo => repo.language))].sort()
-  }, [repos])
-
+const DisplayFeature = ({ sortOption, setSortOption, languageFilter, setLanguageFilter, allLanguages }) => {
   return (
     <Box
       position="sticky"
@@ -176,7 +192,7 @@ const SortFeature = ({ sortOption, setSortOption, languageFilter, setLanguageFil
             bg: useColorModeValue("purple.100", "purple.300")
         }}
       >
-        {uniqueLanguages.map(lang => (
+        {allLanguages.map(lang => (
           <option key={lang} value={lang}>{lang}</option>
         ))}
       </Select>
