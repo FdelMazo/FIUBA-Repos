@@ -108,14 +108,13 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
 
       <Box
         p={8}
-        pt={20}
+        pt={0}
         overscrollBehaviorY="contain"
         overflowY="auto"
         border="1px dashed purple"
         borderRadius={8}
         h="100%"
         my={2}
-        position="relative"
         bg={useColorModeValue("purple.50", "purple.100")}
       >
         {shownRepos.length ? (
@@ -145,42 +144,37 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
 
 const SortFeature = ({ sortOption, setSortOption, languageFilter, setLanguageFilter, repos }) => {
   const uniqueLanguages = React.useMemo(() => {
-    const languages = new Set()
-    repos.forEach(repo => {
-      if (repo.language) languages.add(repo.language)
-    })
-    return Array.from(languages).sort()
+    return [...new Set(repos.filter(repo => !!repo.language).map(repo => repo.language))].sort()
   }, [repos])
 
   return (
     <Box
-      position="absolute"
-      top="0"
-      left="0"
-      right="0"
+      position="sticky"
+      top={0}
+      left={0}
+      right={0}
       display="flex"
       alignItems="center"
       justifyContent="space-between"
       p={4}
-      mb={6}
+      pt={4}
       bg={useColorModeValue("purple.50", "purple.100")}
       borderTopRadius={8}
-      zIndex="1"
+      zIndex={10}
+      width="100%"
+      marginX="auto"
     >
       <Select
-        size="sm"
-        variant="filled"
+        fontSize="sm"
         colorScheme="purple"
         value={languageFilter}
         onChange={(e) => setLanguageFilter(e.target.value)}
         placeholder="Todos los lenguajes"
-        maxW="200px"
+        w="fit"
         bg={useColorModeValue("white", "purple.200")}
         _hover={{
-          bg: useColorModeValue("gray.50", "purple.300")
+            bg: useColorModeValue("purple.100", "purple.300")
         }}
-        focusBorderColor="purple.400"
-        h="32px"
       >
         {uniqueLanguages.map(lang => (
           <option key={lang} value={lang}>{lang}</option>
