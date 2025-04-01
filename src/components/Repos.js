@@ -228,15 +228,22 @@ const sortOptions = [
 
 const NoReposMessage = ({ codigos }) => (
   <div>
-    <p>
-      Esta materia aún no tiene repositorios. <br /> Agregá el primero con
-      {codigos.length === 1 ? " el tag" : " cualquiera de los tags"}
-      {codigos.map((c) => (
-        <Code key={c} mx={1} textIndent={0} colorScheme="purple">
-          {c}
-        </Code>
-      ))}
-    </p>
+    {codigos.length >= 1 ? (
+      <p>
+        Esta materia aún no tiene repositorios. <br /> Agregá el primero con
+        {codigos.length === 1 ? " el tag" : " cualquiera de los tags"}
+        {codigos.map((c) => (
+          <Code key={c} mx={1} textIndent={0} colorScheme="purple">
+            {c}
+          </Code>
+        ))}
+      </p>
+    ) : (
+      <p>
+        No hay repositorios que coincidan con la búsqueda. <br />
+        Agregá el primero con su tag correspondiente.
+      </p>
+    )}
   </div>
 );
 
