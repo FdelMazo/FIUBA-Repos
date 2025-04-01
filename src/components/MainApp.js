@@ -18,6 +18,7 @@ const MainApp = () => {
       user: r.owner.login,
       repoName: r.name,
       description: r.description,
+      language: r.language,
       codigos: new Set(r.topics).intersection(CODIGOS),
       repoData: r,
     }));
@@ -44,15 +45,20 @@ const MainApp = () => {
     repos.forEach((repo) => {
       repo.codigos.forEach((codigoEnRepo) => {
         const nombreMateria = ALIAS_MATERIAS[codigoEnRepo.toUpperCase()];
-        materiasPorNombre.get(nombreMateria).reponames.add(repo.repoData.full_name);
+        materiasPorNombre
+          .get(nombreMateria)
+          .reponames.add(repo.repoData.full_name);
       });
     });
     // Transformamos materiasPorNombre (Map) a arreglo de objetos
-    const materias = Array.from(materiasPorNombre, ([nombre, {codigos, reponames}]) => ({
-      nombre,
-      reponames: [...reponames],
-      codigos: [...codigos],
-    }));
+    const materias = Array.from(
+      materiasPorNombre,
+      ([nombre, { codigos, reponames }]) => ({
+        nombre,
+        reponames: [...reponames],
+        codigos: [...codigos],
+      }),
+    );
 
     return materias;
   }, [repos, materiasPorNombre]);

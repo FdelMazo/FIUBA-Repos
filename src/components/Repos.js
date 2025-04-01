@@ -9,6 +9,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Select,
   Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -21,6 +22,11 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
   const [fiubaOnly, setFiubaOnly] = React.useState(false);
   const [sortOption, setSortOption] = React.useState(sortOptions[0]);
   const [nombreFilter, setNombreFilter] = React.useState("");
+  const [languageFilter, setLanguageFilter] = React.useState("");
+
+  React.useEffect(() => {
+    setLanguageFilter("")
+  }, [materiaSelected])
 
   const shownRepos = React.useMemo(() => {
     let reposToShow = repos;
@@ -39,6 +45,10 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
       );
     }
 
+    if (languageFilter) {
+      reposToShow = reposToShow.filter(r => r.language === languageFilter);
+    }
+
     if (nombreFilter) {
       reposToShow = reposToShow.filter(
         (r) =>
@@ -49,7 +59,7 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
     }
 
     return reposToShow.sort(sortOption.sortFn);
-  }, [materiaSelected, repos, materias, fiubaOnly, sortOption, nombreFilter]);
+  }, [materiaSelected, repos, materias, fiubaOnly, sortOption, nombreFilter, languageFilter]);
 
   return (
     <Box h="80vh" m={2}>
@@ -98,6 +108,7 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
 
       <Box
         p={8}
+        pt={20}
         overscrollBehaviorY="contain"
         overflowY="auto"
         border="1px dashed purple"
@@ -112,15 +123,18 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
             <SortFeature
               sortOption={sortOption}
               setSortOption={setSortOption}
+              languageFilter={languageFilter}
+              setLanguageFilter={setLanguageFilter}
+              repos={shownRepos}
             />
             <RepoCards repoDetails={shownRepos} />
           </>
         ) : (
           <Center height="100%" gap={2}>
-            {!partialLoading && materiaSelected ? (
-              <NoReposMessage codigos={materiaSelected.codigos} />
-            ) : (
+            {partialLoading ? (
               <Loading />
+            ) : (
+              <NoReposMessage codigos={materiaSelected?.codigos || []} />
             )}
           </Center>
         )}
@@ -129,27 +143,67 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
   );
 };
 
-const SortFeature = ({ sortOption, setSortOption }) => {
+const SortFeature = ({ sortOption, setSortOption, languageFilter, setLanguageFilter, repos }) => {
+  const uniqueLanguages = React.useMemo(() => {
+    const languages = new Set()
+    repos.forEach(repo => {
+      if (repo.language) languages.add(repo.language)
+    })
+    return Array.from(languages).sort()
+  }, [repos])
+
   return (
-    <Tooltip label={`Ordenado por ${sortOption.longName}`}>
-      <IconButton
-        position="absolute"
-        top="0"
-        right="0"
-        variant="link"
+    <Box
+      position="absolute"
+      top="0"
+      left="0"
+      right="0"
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      p={4}
+      mb={6}
+      bg={useColorModeValue("purple.50", "purple.100")}
+      borderTopRadius={8}
+      zIndex="1"
+    >
+      <Select
+        size="sm"
+        variant="filled"
         colorScheme="purple"
-        p="2"
-        aria-label={`Repositorios ordenados por ${sortOption.longName}`}
-        icon={sortOption.icon}
-        onClick={() => {
-          setSortOption(
-            sortOption.shortName === sortOptions[0].shortName
-              ? sortOptions[1]
-              : sortOptions[0],
-          );
+        value={languageFilter}
+        onChange={(e) => setLanguageFilter(e.target.value)}
+        placeholder="Todos los lenguajes"
+        maxW="200px"
+        bg={useColorModeValue("white", "purple.200")}
+        _hover={{
+          bg: useColorModeValue("gray.50", "purple.300")
         }}
-      />
-    </Tooltip>
+        focusBorderColor="purple.400"
+        h="32px"
+      >
+        {uniqueLanguages.map(lang => (
+          <option key={lang} value={lang}>{lang}</option>
+        ))}
+      </Select>
+
+      <Tooltip label={`Ordenado por ${sortOption.longName}`}>
+        <IconButton
+          size="sm"
+          variant="ghost"
+          colorScheme="purple"
+          aria-label={`Repositorios ordenados por ${sortOption.longName}`}
+          icon={sortOption.icon}
+          onClick={() => {
+            setSortOption(
+              sortOption.shortName === sortOptions[0].shortName
+                ? sortOptions[1]
+                : sortOptions[0],
+            );
+          }}
+        />
+      </Tooltip>
+    </Box>
   );
 };
 
