@@ -172,6 +172,10 @@ const DisplayFeature = ({ sortOption, setSortOption, languageFilter, setLanguage
       justifyContent="space-between"
       p={4}
       bg={useColorModeValue("purple.50", "purple.100")}
+      pb={2}
+      mb={2}
+      boxShadow="0px 1px 5px rgba(0, 0, 0, 0.15)"
+      clipPath="polygon(0% 0%, 100% 0%, 100% 120%, 0% 120%)"
     >
       <Select
         fontSize="sm"
