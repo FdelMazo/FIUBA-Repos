@@ -9,6 +9,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Select,
   Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -21,6 +22,21 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
   const [fiubaOnly, setFiubaOnly] = React.useState(false);
   const [sortOption, setSortOption] = React.useState(sortOptions[0]);
   const [nombreFilter, setNombreFilter] = React.useState("");
+  const [languageFilter, setLanguageFilter] = React.useState("");
+
+  React.useEffect(() => {
+    if (materiaSelected) {
+      const newMateriaLanguages = [...new Set(repos
+        .filter(r => materiaSelected.codigos.some(c => r.repoData.topics.includes(c.toLowerCase())))
+        .filter(repo => !!repo.language)
+        .map(repo => repo.language)
+      )];
+
+      if (languageFilter && !newMateriaLanguages.includes(languageFilter)) {
+        setLanguageFilter("");
+      }
+    }
+  }, [materiaSelected, repos, languageFilter])
 
   const shownRepos = React.useMemo(() => {
     let reposToShow = repos;
@@ -38,9 +54,18 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
         ),
       );
     }
+    return reposToShow;
+  }, [repos, materiaSelected, materias, fiubaOnly]);
+
+  const filteredRepos = React.useMemo(() => {
+    let repos = shownRepos;
+
+    if (languageFilter) {
+      repos = repos.filter(r => r.language === languageFilter);
+    }
 
     if (nombreFilter) {
-      reposToShow = reposToShow.filter(
+      repos = repos.filter(
         (r) =>
           r.user.toLowerCase().includes(nombreFilter.toLowerCase()) ||
           r.description?.toLowerCase().includes(nombreFilter.toLowerCase()) ||
@@ -48,13 +73,17 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
       );
     }
 
-    return reposToShow.sort(sortOption.sortFn);
-  }, [materiaSelected, repos, materias, fiubaOnly, sortOption, nombreFilter]);
+    return repos.sort(sortOption.sortFn);
+  }, [shownRepos, languageFilter, nombreFilter, sortOption]);
+
+  const allLanguages = React.useMemo(() => {
+    return [...new Set(shownRepos.filter(repo => !!repo.language).map(repo => repo.language))].sort()
+  }, [shownRepos])
 
   return (
     <Box h="80vh" m={2}>
       <Heading fontWeight={600} fontSize="4xl" mt={8}>
-        {shownRepos.length || ""} Repositorios con topics{" "}
+        {filteredRepos.length || ""} Repositorios con topics{" "}
         <Code
           colorScheme="purple"
           fontSize="2xl"
@@ -98,29 +127,33 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
 
       <Box
         p={8}
+        pt={0}
         overscrollBehaviorY="contain"
         overflowY="auto"
         border="1px dashed purple"
         borderRadius={8}
         h="100%"
         my={2}
-        position="relative"
         bg={useColorModeValue("purple.50", "purple.100")}
       >
-        {shownRepos.length ? (
+        {filteredRepos.length ? (
           <>
-            <SortFeature
+            <DisplayFeature
               sortOption={sortOption}
               setSortOption={setSortOption}
+              languageFilter={languageFilter}
+              setLanguageFilter={setLanguageFilter}
+              repos={filteredRepos}
+              allLanguages={allLanguages}
             />
-            <RepoCards repoDetails={shownRepos} />
+            <RepoCards repoDetails={filteredRepos} />
           </>
         ) : (
           <Center height="100%" gap={2}>
-            {!partialLoading && materiaSelected ? (
-              <NoReposMessage codigos={materiaSelected.codigos} />
-            ) : (
+            {partialLoading ? (
               <Loading />
+            ) : (
+              <NoReposMessage codigos={materiaSelected?.codigos || []} />
             )}
           </Center>
         )}
@@ -129,27 +162,55 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
   );
 };
 
-const SortFeature = ({ sortOption, setSortOption }) => {
+const DisplayFeature = ({ sortOption, setSortOption, languageFilter, setLanguageFilter, allLanguages }) => {
   return (
-    <Tooltip label={`Ordenado por ${sortOption.longName}`}>
-      <IconButton
-        position="absolute"
-        top="0"
-        right="0"
-        variant="link"
+    <Box
+      position="sticky"
+      top={0}
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      p={4}
+      bg={useColorModeValue("purple.50", "purple.100")}
+      pb={2}
+      mb={2}
+      boxShadow="0px 1px 5px rgba(0, 0, 0, 0.15)"
+      clipPath="polygon(0% 0%, 100% 0%, 100% 120%, 0% 120%)"
+    >
+      <Select
+        fontSize="sm"
         colorScheme="purple"
-        p="2"
-        aria-label={`Repositorios ordenados por ${sortOption.longName}`}
-        icon={sortOption.icon}
-        onClick={() => {
-          setSortOption(
-            sortOption.shortName === sortOptions[0].shortName
-              ? sortOptions[1]
-              : sortOptions[0],
-          );
+        value={languageFilter}
+        onChange={(e) => setLanguageFilter(e.target.value)}
+        placeholder="Todos los lenguajes"
+        w="fit"
+        bg={useColorModeValue("white", "purple.200")}
+        _hover={{
+            bg: useColorModeValue("purple.100", "purple.300")
         }}
-      />
-    </Tooltip>
+      >
+        {allLanguages.map(lang => (
+          <option key={lang} value={lang}>{lang}</option>
+        ))}
+      </Select>
+
+      <Tooltip label={`Ordenado por ${sortOption.longName}`}>
+        <IconButton
+          size="sm"
+          variant="ghost"
+          colorScheme="purple"
+          aria-label={`Repositorios ordenados por ${sortOption.longName}`}
+          icon={sortOption.icon}
+          onClick={() => {
+            setSortOption(
+              sortOption.shortName === sortOptions[0].shortName
+                ? sortOptions[1]
+                : sortOptions[0],
+            );
+          }}
+        />
+      </Tooltip>
+    </Box>
   );
 };
 
@@ -174,15 +235,22 @@ const sortOptions = [
 
 const NoReposMessage = ({ codigos }) => (
   <div>
-    <p>
-      Esta materia aún no tiene repositorios. <br /> Agregá el primero con
-      {codigos.length === 1 ? " el tag" : " cualquiera de los tags"}
-      {codigos.map((c) => (
-        <Code key={c} mx={1} textIndent={0} colorScheme="purple">
-          {c}
-        </Code>
-      ))}
-    </p>
+    {codigos.length >= 1 ? (
+      <p>
+        Esta materia aún no tiene repositorios. <br /> Agregá el primero con
+        {codigos.length === 1 ? " el tag" : " cualquiera de los tags"}
+        {codigos.map((c) => (
+          <Code key={c} mx={1} textIndent={0} colorScheme="purple">
+            {c}
+          </Code>
+        ))}
+      </p>
+    ) : (
+      <p>
+        No hay repositorios que coincidan con la búsqueda. <br />
+        Agregá el primero con su tag correspondiente.
+      </p>
+    )}
   </div>
 );
 

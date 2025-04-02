@@ -18,6 +18,7 @@ const MainApp = () => {
       user: r.owner.login,
       repoName: r.name,
       description: r.description,
+      language: r.language,
       codigos: new Set(r.topics).intersection(CODIGOS),
       repoData: r,
     }));
