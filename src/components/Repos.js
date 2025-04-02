@@ -167,18 +167,11 @@ const DisplayFeature = ({ sortOption, setSortOption, languageFilter, setLanguage
     <Box
       position="sticky"
       top={0}
-      left={0}
-      right={0}
       display="flex"
       alignItems="center"
       justifyContent="space-between"
       p={4}
-      pt={4}
       bg={useColorModeValue("purple.50", "purple.100")}
-      borderTopRadius={8}
-      zIndex={10}
-      width="100%"
-      marginX="auto"
     >
       <Select
         fontSize="sm"
