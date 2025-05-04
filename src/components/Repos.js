@@ -119,7 +119,7 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
           color="gray.600"
           bg={useColorModeValue("purple.50", "purple.100")}
           placeholder="Repositorios"
-          _placeholder={{ opacity: 0.5, color: "purple.900" }}
+          _placeholder={{ opacity: 0.5, color: "gray.900" }}
           value={nombreFilter}
           onChange={(event) => setNombreFilter(event.target.value)}
         />
@@ -130,7 +130,8 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
         pt={0}
         overscrollBehaviorY="contain"
         overflowY="auto"
-        border="1px dashed purple"
+        // For some reason, this seems to be <darkvalue>,<lightvalue>
+        border={useColorModeValue("1px dashed purple", "")}
         borderRadius={8}
         h="100%"
         my={2}
@@ -184,9 +185,11 @@ const DisplayFeature = ({ sortOption, setSortOption, languageFilter, setLanguage
         onChange={(e) => setLanguageFilter(e.target.value)}
         placeholder="Todos los lenguajes"
         w="fit"
-        bg={useColorModeValue("white", "purple.200")}
+        color={"gray.700"}
+        borderColor={useColorModeValue("gray.200", "gray.500")}
+        bg={useColorModeValue("white", "none")}
         _hover={{
-            bg: useColorModeValue("purple.100", "purple.300")
+            bg: useColorModeValue("purple.100", "purple.200")
         }}
       >
         {allLanguages.map(lang => (
@@ -198,7 +201,7 @@ const DisplayFeature = ({ sortOption, setSortOption, languageFilter, setLanguage
         <IconButton
           size="sm"
           variant="ghost"
-          colorScheme="purple"
+          color="purple.500"
           aria-label={`Repositorios ordenados por ${sortOption.longName}`}
           icon={sortOption.icon}
           onClick={() => {

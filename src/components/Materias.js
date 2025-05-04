@@ -68,7 +68,7 @@ const Materias = ({
           color="gray.600"
           bg={useColorModeValue("purple.50", "purple.100")}
           placeholder="Materia"
-          _placeholder={{ opacity: 0.5, color: "purple.900" }}
+          _placeholder={{ opacity: 0.5, color: "gray.900" }}
           value={nombreFilter}
           onChange={(event) => setNombreFilter(event.target.value)}
         />
@@ -80,7 +80,8 @@ const Materias = ({
         spacing={4}
         overscrollBehaviorY="contain"
         overflowY="auto"
-        border="1px dashed purple"
+        // For some reason, this seems to be <darkvalue>,<lightvalue>
+        border={useColorModeValue("1px dashed purple", "")}
         borderRadius={8}
         position="relative" // Needed for the loading bar
         overflowX="hidden" // Needed for the loading bar
