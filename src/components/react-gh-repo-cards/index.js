@@ -52,35 +52,48 @@ const RepoCard = ({ user, repo, showFullTitle, data }) => {
       <p className={[styles["mt-2"], styles["mb-3"]].join(" ")}>
         {data.description}
       </p>
-      <p style={{ fontSize: "12px" }}>
-        <span className={styles["mr-3"]}>
-          <span
-            className={styles["lang-color"]}
-            style={{ backgroundColor: colors[data.language] }}
-          ></span>{" "}
-          {data.language}
-        </span>
-        {data.stargazers_count > 0 ? (
-          <a
-            className={styles["github-icon"]}
-            target="blank"
-            href={`https://github.com/${user}/${repo}/stargazers`}
-          >
-            <StarIcon className={styles["svg"]} /> {data.stargazers_count}
-          </a>
-        ) : null}
-        {data.forks_count > 0 ? (
-          <a
-            className={[
-              styles["github-icon"],
-              data.stargazers_count > 0 ? styles["ml-3"] : "",
-            ].join(" ")}
-            target="blank"
-            href={`https://github.com/${user}/${repo}/network`}
-          >
-            <ForkIcon className={styles["svg"]} /> {data.forks_count}
-          </a>
-        ) : null}
+      <p
+        style={{
+          fontSize: "12px",
+          display: "flex",
+          alignItems: "center",
+          gap: "18px",
+        }}
+      >
+        {data.language && (
+          <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            <span
+              className={styles["lang-color"]}
+              style={{ backgroundColor: colors[data.language] }}
+            ></span>{" "}
+            {data.language}
+          </span>
+        )}
+        {(data.stargazers_count > 0 || data.forks_count > 0) && (
+          <div>
+            {data.stargazers_count > 0 ? (
+              <a
+                className={styles["github-icon"]}
+                target="blank"
+                href={`https://github.com/${user}/${repo}/stargazers`}
+              >
+                <StarIcon className={styles["svg"]} /> {data.stargazers_count}
+              </a>
+            ) : null}
+            {data.forks_count > 0 ? (
+              <a
+                className={[
+                  styles["github-icon"],
+                  data.stargazers_count > 0 ? styles["ml-3"] : "",
+                ].join(" ")}
+                target="blank"
+                href={`https://github.com/${user}/${repo}/network`}
+              >
+                <ForkIcon className={styles["svg"]} /> {data.forks_count}
+              </a>
+            ) : null}
+          </div>
+        )}
       </p>
     </div>
   );
