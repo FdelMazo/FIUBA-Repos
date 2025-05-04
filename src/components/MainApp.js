@@ -86,7 +86,7 @@ const MainApp = () => {
   };
 
   return (
-    <SimpleGrid minChildWidth="600px" m={2}>
+    <SimpleGrid columns={{ base: 1, md: 2 }} m={2}>
       <Flex direction="column" px={4}>
         <Header {...commonProps} />
         <Materias {...commonProps} />
