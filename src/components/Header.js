@@ -32,76 +32,78 @@ const Header = ({ repos }) => {
           </Icon>
         </Link>
       </Heading>
-      <Text color={useColorModeValue("gray.600", "gray.200")}>
-        Cuando fue la última vez que dijiste{" "}
-        <i>"uh, a ver los TPs del cuatri pasado de Numérico..."</i> y te costó
-        encontrarlos? Exacto! Porque nos falta poder clasificar todos los repos
-        de FIUBA.
-      </Text>
+      <Box textAlign="justify">
+        <Text color={useColorModeValue("gray.600", "gray.200")}>
+          Cuando fue la última vez que dijiste{" "}
+          <i>"uh, a ver los TPs del cuatri pasado de Numérico..."</i> y te costó
+          encontrarlos? Exacto! Porque nos falta poder clasificar todos los repos
+          de FIUBA.
+        </Text>
 
-      <Text color={useColorModeValue("gray.600", "gray.200")}>
-        Entonces, te pido ayuda con dos cosas:
-      </Text>
-      <List color={useColorModeValue("gray.600", "gray.200")}>
-        <ListItem>
-          <Text as="span" color="purple" fontWeight={600} mx={2}>
-            ◆
-          </Text>
-          Si tenés algun repo con material de FIUBA{" "}
-          <Text as="span" color="purple" fontWeight={600}>
-            ➔
-          </Text>{" "}
-          Agregalo a esta página!
-        </ListItem>
-        <ListItem>
-          <Text as="span" color="purple" fontWeight={600} mx={2}>
-            ◆
-          </Text>
-          Si tenés compañeros de FIUBA{" "}
-          <Text as="span" color="purple" fontWeight={600}>
-            ➔
-          </Text>{" "}
-          Compartiles esta página!
-        </ListItem>
-      </List>
+        <Text color={useColorModeValue("gray.600", "gray.200")}>
+          Entonces, te pido ayuda con dos cosas:
+        </Text>
+        <List color={useColorModeValue("gray.600", "gray.200")}>
+          <ListItem>
+            <Text as="span" color="purple" fontWeight={600} mx={2}>
+              ◆
+            </Text>
+            Si tenés algun repo con material de FIUBA{" "}
+            <Text as="span" color="purple" fontWeight={600}>
+              ➔
+            </Text>{" "}
+            Agregalo a esta página!
+          </ListItem>
+          <ListItem>
+            <Text as="span" color="purple" fontWeight={600} mx={2}>
+              ◆
+            </Text>
+            Si tenés compañeros de FIUBA{" "}
+            <Text as="span" color="purple" fontWeight={600}>
+              ➔
+            </Text>{" "}
+            Compartiles esta página!
+          </ListItem>
+        </List>
 
-      <Text mt={1} color={useColorModeValue("gray.600", "gray.200")}>
-        Agregar tu repo es sencillo: si tenés TPs, parciales o finales de una
-        materia subido a Github, solo tenés que agregarle el topic{" "}
-        <Tooltip
-          label={
-            repos.length
-              ? `${repos.length} repos - ${new Set(repos.map((r) => r.user)).size} usuarios`
-              : ""
-          }
-          hasArrow
-          placement="top"
-        >
-          <Link isExternal href="https://github.com/topics/fiuba">
-            <Code colorScheme="purple">fiuba</Code>
+        <Text mt={1} color={useColorModeValue("gray.600", "gray.200")}>
+          Agregar tu repo es sencillo: si tenés TPs, parciales o finales de una
+          materia subido a Github, solo tenés que agregarle el topic{" "}
+          <Tooltip
+            label={
+              repos.length
+                ? `${repos.length} repos - ${new Set(repos.map((r) => r.user)).size} usuarios`
+                : ""
+            }
+            hasArrow
+            placement="top"
+          >
+            <Link isExternal href="https://github.com/topics/fiuba">
+              <Code colorScheme="purple">fiuba</Code>
+            </Link>
+          </Tooltip>{" "}
+          y el código de la materia (ej: <Code colorScheme="purple">7512</Code>).
+          Los topics se editan desde la página principal del repo, a la derecha
+          (donde se cambia la descripción).
+        </Text>
+
+        <Text color={useColorModeValue("gray.600", "gray.200")}>
+          Bonus points si en la descripción del repo escribís qué cuatrimestre la
+          cursaste y qué contiene el repo!
+        </Text>
+
+        <Text color={useColorModeValue("gray.600", "gray.200")} fontSize="sm" textAlign="right">
+          Si tenés alguna sugerencia, abrime un{" "}
+          <Link
+            isExternal
+            href="https://github.com/FdelMazo/FIUBA-Repos/issues/new"
+          >
+            <Code colorScheme="blue" fontSize="xs">
+              issue!
+            </Code>
           </Link>
-        </Tooltip>{" "}
-        y el código de la materia (ej: <Code colorScheme="purple">7512</Code>).
-        Los topics se editan desde la página principal del repo, a la derecha
-        (donde se cambia la descripción).
-      </Text>
-
-      <Text color={useColorModeValue("gray.600", "gray.200")}>
-        Bonus points si en la descripción del repo escribís qué cuatrimestre la
-        cursaste y qué contiene el repo!
-      </Text>
-
-      <Text color={useColorModeValue("gray.600", "gray.200")} fontSize="sm" textAlign="right">
-        Si tenés alguna sugerencia, abrime un{" "}
-        <Link
-          isExternal
-          href="https://github.com/FdelMazo/FIUBA-Repos/issues/new"
-        >
-          <Code colorScheme="blue" fontSize="xs">
-            issue!
-          </Code>
-        </Link>
-      </Text>
+        </Text>
+      </Box>
     </Box>
   );
 };
