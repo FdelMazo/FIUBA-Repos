@@ -75,7 +75,7 @@ const Materias = ({
       </InputGroup>
 
       <SimpleGrid
-        columns={materias.length ? 2 : 1}
+        columns={materias.length ? [1, 2] : 1}
         h="56vh"
         spacing={4}
         overscrollBehaviorY="contain"
@@ -117,7 +117,7 @@ const Materias = ({
                 }}
               >
                 <Flex justifyContent="space-between">
-                  <HStack>
+                  <HStack overflowX="hidden">
                     {m.codigos.map((c) => (
                       <Text color="purple" fontWeight={600} key={c}>
                         {c}
