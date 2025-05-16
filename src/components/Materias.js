@@ -71,6 +71,7 @@ const Materias = ({
           _placeholder={{ opacity: 0.5, color: "gray.900" }}
           value={nombreFilter}
           onChange={(event) => setNombreFilter(event.target.value)}
+          textAlign={"center"}
         />
       </InputGroup>
 
@@ -137,6 +138,7 @@ const Materias = ({
                   fontSize="lg"
                   fontWeight={600}
                   color="gray.800"
+                  textAlign="center"
                 >
                   {m.nombre}
                 </Heading>

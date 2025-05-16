@@ -15,7 +15,7 @@ import {
 const Header = ({ repos }) => {
   return (
     <Box>
-      <Heading fontWeight={600} fontSize={"6xl"}>
+      <Heading fontWeight={600} fontSize={"6xl"} textAlign="center">
         FIUBA Repos
         <Link isExternal href="https://github.com/FdelMazo/FIUBA-Repos">
           <Icon
@@ -91,7 +91,7 @@ const Header = ({ repos }) => {
         cursaste y qué contiene el repo!
       </Text>
 
-      <Text color={useColorModeValue("gray.600", "gray.200")} fontSize="sm">
+      <Text color={useColorModeValue("gray.600", "gray.200")} fontSize="sm" textAlign="right">
         Si tenés alguna sugerencia, abrime un{" "}
         <Link
           isExternal

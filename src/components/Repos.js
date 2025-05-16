@@ -82,7 +82,7 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
 
   return (
     <Box h="80vh" m={2}>
-      <Heading fontWeight={600} fontSize="4xl" mt={8}>
+      <Heading fontWeight={600} fontSize="4xl" mt={8} textAlign="center">
         {filteredRepos.length || ""} Repositorios con topics{" "}
         <Code
           colorScheme="purple"
@@ -122,6 +122,7 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
           _placeholder={{ opacity: 0.5, color: "gray.900" }}
           value={nombreFilter}
           onChange={(event) => setNombreFilter(event.target.value)}
+          textAlign="center"
         />
       </InputGroup>
 
@@ -136,6 +137,7 @@ const Repos = ({ materiaSelected, repos, materias, partialLoading }) => {
         h="100%"
         my={2}
         bg={useColorModeValue("purple.50", "purple.100")}
+        textAlign="center"
       >
         {filteredRepos.length ? (
           <>
@@ -189,7 +191,7 @@ const DisplayFeature = ({ sortOption, setSortOption, languageFilter, setLanguage
         borderColor={useColorModeValue("gray.200", "gray.500")}
         bg={useColorModeValue("white", "none")}
         _hover={{
-            bg: useColorModeValue("purple.100", "purple.200")
+          bg: useColorModeValue("purple.100", "purple.200")
         }}
       >
         {allLanguages.map(lang => (
