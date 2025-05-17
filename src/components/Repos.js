@@ -191,6 +191,11 @@ const DisplayFeature = ({ sortOption, setSortOption, languageFilter, setLanguage
         _hover={{
             bg: useColorModeValue("purple.100", "purple.200")
         }}
+        css={{
+          "> option": {
+            color: useColorModeValue("none", "white"),
+          },
+        }}
       >
         {allLanguages.map(lang => (
           <option key={lang} value={lang}>{lang}</option>
